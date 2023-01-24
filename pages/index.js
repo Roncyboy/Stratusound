@@ -3,14 +3,32 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useSession, signIn, signOut } from "next-auth/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 
 export default function Home() {
   const { data: session } = useSession()
   const [playlists, setPlaylists] = useState([])
-  const [location, setLocation] = useState()
+  const [songs, setSongs] = useState([])
+  const [location, setLocation] = useState('')
   const [weather, setWeather] = useState()
+
+  const apiKey = 'd81e2880e7fc30576236bb01fd689147'
+  let lang = 'en'
+  let units = 'metric'
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${units}&appid=${apiKey}&lang=${lang}`
+
+  useEffect(() => {
+    const getSongs = async () => {
+      const res = await fetch('/api/songs')
+      const data = await res.json()
+      console.log(data)
+      setSongs(data)
+    }
+
+    weather && getSongs()
+
+  }, [weather])
 
   const getMyPlaylists = async () => {
     const res = await fetch('/api/playlists');
@@ -19,13 +37,6 @@ export default function Home() {
   };
 
   const searchLocation = async () => {
-
-    const apiKey = 'd81e2880e7fc30576236bb01fd689147'
-    const lang = 'en'
-    const units = 'metric'
-    const location = 'vancouver'
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${units}&appid=${apiKey}&lang=${lang}`
-
     try {
       const res = await axios.get(url)
       console.log(res.data)
@@ -60,6 +71,12 @@ export default function Home() {
             <p>{weather.weather[0].description}</p>
           </div>
           : <></>}
+
+        {/* {songs.map((song) => {
+          <div key={song.name}>
+            <p>{song.name}</p>
+          </div>
+        })} */}
 
         {playlists.map((item) => (
           <div key={item.id}>
