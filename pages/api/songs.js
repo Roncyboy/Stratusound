@@ -5,8 +5,9 @@ const handler = async (req, res) => {
   const {
     token: { accessToken },
   } = await getSession({ req });
-  const response = await getSongs(accessToken);
-  const data = await response.json();
+  const weather = req.query.weather;
+  const songs = await getSongs(accessToken, weather);
+  const data = await songs.json();
 
   return res.status(200).json(data);
 };

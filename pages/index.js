@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     const getSongs = async () => {
-      const res = await fetch('/api/songs')
+      const res = await fetch(`/api/songs?weather=${weather.weather[0].main}`)
       const data = await res.json()
       console.log(data)
       setSongs(data)
