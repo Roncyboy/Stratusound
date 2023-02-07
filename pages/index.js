@@ -75,11 +75,11 @@ export default function Home() {
           : <></>}
 
         <h1>Songs</h1>
-        {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
+        {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
           <div key={item.id}>
             <p>{item.name}</p>
           </div>
-        )) : <></>}
+        )) : <></>} */}
 
         {playlists.map((item) => (
           <div key={item.id}>
