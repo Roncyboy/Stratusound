@@ -15,6 +15,7 @@ export default function Home() {
   const [songs, setSongs] = useState([])
   const [location, setLocation] = useState('')
   const [weather, setWeather] = useState()
+  const [selectedGenres, setSelectedGenres] = useState([])
 
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
   let lang = 'en'
@@ -52,6 +53,16 @@ export default function Home() {
     }
   }
 
+  const handleGenreSelect = ({ genre }) => {
+    if (selectedGenres.includes(genre)) {
+      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre));
+      console.log(selectedGenres)
+    } else {
+      setSelectedGenres([...selectedGenres, genre]);
+      console.log(selectedGenres)
+    }
+  };
+
   if (session) {
     return (
       <>
@@ -77,7 +88,7 @@ export default function Home() {
           </div>
           : <></>}
 
-        <GenreChips />
+        <GenreChips handleClick={handleGenreSelect} />
 
         <h1>Songs</h1>
         {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (

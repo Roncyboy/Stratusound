@@ -132,26 +132,14 @@ const genres = [
 
 // TODO: Make responsive, get selected genres from user account/local storage
 
-export default function GenreChips() {
-  const [selectedGenres, setSelectedGenres] = useState([]);
-
-  const handleGenreSelect = ({ genre }) => {
-    if (selectedGenres.includes(genre)) {
-      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre));
-      console.log(selectedGenres)
-    } else {
-      setSelectedGenres([...selectedGenres, genre]);
-      console.log(selectedGenres)
-    }
-  };
-
+export default function GenreChips({ handleClick }) {
   return (
     <ScrollArea style={{ height: 240 }}>
       {/* ... content */}
       <Chip.Group multiple>
         {genres.map((genre, index) => (
           <Chip genre={genre} variant="filled" key={index} value={genre} onClick={() => {
-            handleGenreSelect({ genre })
+            handleClick({ genre })
           }}>{genre}</Chip>
         ))}
       </Chip.Group>
