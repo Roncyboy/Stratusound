@@ -2,9 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import { useSession, signIn, signOut } from "next-auth/react"
+
 import { useEffect, useState } from "react"
+import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
+
+import GenreChips from "@/components/GenreChips"
 
 export default function Home() {
   const { data: session } = useSession()
@@ -73,6 +76,8 @@ export default function Home() {
             <p>{weather.weather[0].description}</p>
           </div>
           : <></>}
+
+        <GenreChips />
 
         <h1>Songs</h1>
         {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
