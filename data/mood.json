@@ -1,0 +1,58 @@
+{ "mood": [
+       {
+              "name": "Drizzle",
+              "ids" :[
+                     "300",
+                     "301",
+                     "302",
+                     "310",
+                     "311",
+                     "312",
+                     "313",
+                     "314",
+                     "321"
+              ],
+              "icon": "09d",             
+              "color": "#5BBADD",
+              "moods": [
+                     "melancholy", 
+                     "nostalgia", 
+                     "introspection",
+                     "reflection",
+                     "loneliness",
+                     "sadness",
+                     "meditation",
+                     "contemplation"
+              ]
+       },
+       {
+              "name": "Light Rain",
+              "ids" :[
+                     "300",
+                     "301",
+                     "302",
+                     "310",
+                     "311",
+                     "312",
+                     "313",
+                     "314",
+                     "321"
+              ],
+              "icon": "09d",             
+              "color": "#369FF2",
+              "moods": [
+                     "melancholy", 
+                     "nostalgia",
+                     "throwback",
+                     "introspection",
+                     "reflection",
+                     "sorrow",
+                     "loneliness",
+                     "sadness",
+                     "meditation",
+                     "contemplation",
+                     "coziness", 
+                     "comfort"
+              ]
+       }
+]}
