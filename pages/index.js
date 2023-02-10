@@ -24,6 +24,7 @@ export default function Home() {
       const data = await res.json()
       console.log(data)
       setSongs(data)
+      console.log(songs)
     }
 
     weather && getSongs()
@@ -33,6 +34,7 @@ export default function Home() {
   const getMyPlaylists = async () => {
     const res = await fetch('/api/playlists');
     const { items } = await res.json();
+    console.log(items)
     setPlaylists(items);
   };
 
@@ -72,11 +74,12 @@ export default function Home() {
           </div>
           : <></>}
 
-        {/* {songs.map((song) => {
-          <div key={song.name}>
-            <p>{song.name}</p>
+        <h1>Songs</h1>
+        {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
+          <div key={item.id}>
+            <p>{item.name}</p>
           </div>
-        })} */}
+        )) : <></>} */}
 
         {playlists.map((item) => (
           <div key={item.id}>
