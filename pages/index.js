@@ -19,6 +19,7 @@ export default function Home() {
 
   const [topTracks, setTopTracks] = useState({})
   const [topArtists, setTopArtists] = useState({})
+  const [recommendations, setRecommendations] = useState({})
 
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
   let lang = 'en'
@@ -38,17 +39,41 @@ export default function Home() {
       const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
       const data = await res.json()
       console.log(data)
-      setTopTracks(data)
+      return data
     }
 
     const getTopArtists = async () => {
       const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
       const data = await res.json()
       console.log(data)
-      setTopArtists(data)
+      return data
     }
 
-    weather && getSongs() && getTopTracks() && getTopArtists()
+    const getRecommendations = async () => {
+      const topArtists = await getTopArtists()
+      const topTracks = await getTopTracks()
+
+      const artistSeed = await topArtists.items[0].id
+      const trackSeed = await topTracks.items[0].id
+
+      console.log(artistSeed)
+      console.log(trackSeed)
+
+      if (selectedGenres.length === 0) {
+        setSelectedGenres(selectedGenres => selectedGenres.push('pop'))
+      }
+
+      const res = await fetch(`/api/recommendations?limit=5&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
+      const data = await res.json()
+      console.log('These are the recommendations', data)
+      setRecommendations(data)
+    }
+
+    weather && getRecommendations()
+
+    if (selectedGenres.length === 0) {
+      setSelectedGenres(['pop'])
+    }
 
   }, [weather])
 
@@ -126,6 +151,12 @@ export default function Home() {
         ))}
 
         <h1>Genre Seeds</h1>
+
+        {/* {selectedGenres && selectedGenres.map((item) => (
+          <div key={item}>
+            <h3>{item}</h3>
+          </div>
+        ))} */}
 
         {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
           <div key={item.id}>
