@@ -18,6 +18,7 @@ export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState([])
 
   const [topTracks, setTopTracks] = useState({})
+  const [topArtists, setTopArtists] = useState({})
 
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
   let lang = 'en'
@@ -40,7 +41,14 @@ export default function Home() {
       setTopTracks(data)
     }
 
-    weather && getSongs() && getTopTracks()
+    const getTopArtists = async () => {
+      const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
+      const data = await res.json()
+      console.log(data)
+      setTopArtists(data)
+    }
+
+    weather && getSongs() && getTopTracks() && getTopArtists()
 
   }, [weather])
 
@@ -101,7 +109,7 @@ export default function Home() {
 
         <h1>Song seeds</h1>
 
-        {topTracks.items.map((item) => (
+        {topTracks.items && topTracks.items.map((item) => (
           <div key={item.id}>
             <h3>{item.name}</h3>
             <p>{item.id}</p>
@@ -109,6 +117,13 @@ export default function Home() {
         ))}
 
         <h1>Artist Seeds</h1>
+
+        {topArtists.items && topArtists.items.map((item) => (
+          <div key={item.id}>
+            <h3>{item.name}</h3>
+            <p>{item.id}</p>
+          </div>
+        ))}
 
         <h1>Genre Seeds</h1>
 
