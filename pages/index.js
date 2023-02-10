@@ -17,6 +17,8 @@ export default function Home() {
   const [weather, setWeather] = useState()
   const [selectedGenres, setSelectedGenres] = useState([])
 
+  const [topTracks, setTopTracks] = useState({})
+
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
   let lang = 'en'
   let units = 'metric'
@@ -26,12 +28,19 @@ export default function Home() {
     const getSongs = async () => {
       const res = await fetch(`/api/songs?weather=${weather.weather[0].main}`)
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       setSongs(data)
-      console.log(songs)
+      // console.log(songs)
     }
 
-    weather && getSongs()
+    const getTopTracks = async () => {
+      const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
+      const data = await res.json()
+      console.log(data)
+      setTopTracks(data)
+    }
+
+    weather && getSongs() && getTopTracks()
 
   }, [weather])
 
@@ -90,7 +99,19 @@ export default function Home() {
 
         <GenreChips handleClick={handleGenreSelect} />
 
-        <h1>Songs</h1>
+        <h1>Song seeds</h1>
+
+        {topTracks.items.map((item) => (
+          <div key={item.id}>
+            <h3>{item.name}</h3>
+            <p>{item.id}</p>
+          </div>
+        ))}
+
+        <h1>Artist Seeds</h1>
+
+        <h1>Genre Seeds</h1>
+
         {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
           <div key={item.id}>
             <p>{item.name}</p>
