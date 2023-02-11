@@ -7,9 +7,10 @@ import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
 
+import { SimpleGrid } from "@mantine/core"
 import GenreChips from "@/components/GenreChips"
 import MantineCard from '../components/MantineCard'
-import { Flex, Grid, SimpleGrid } from "@mantine/core"
+import MantineNav from "@/components/MantineNav"
 
 export default function Home() {
   const { data: session } = useSession()
@@ -124,7 +125,7 @@ export default function Home() {
           type='text'
         />
         <button onClick={() => searchLocation()}>Search</button>
-        <button onClick={() => getMyPlaylists()}>Get playlists</button>
+        {/* <button onClick={() => getMyPlaylists()}>Get playlists</button> */}
 
         {weather ?
           <div>
@@ -156,38 +157,12 @@ export default function Home() {
           ))}
         </SimpleGrid>
 
-        <h1>Song seeds</h1>
-
-        {topTracks.items && topTracks.items.map((item) => (
-          <div key={item.id}>
-            <h3>{item.name}</h3>
-            <p>{item.id}</p>
-          </div>
-        ))}
-
-        <h1>Artist Seeds</h1>
-
-        {topArtists.items && topArtists.items.map((item) => (
-          <div key={item.id}>
-            <h3>{item.name}</h3>
-            <p>{item.id}</p>
-          </div>
-        ))}
-
-        <h1>Genre Seeds</h1>
-
-        {selectedGenres.length > 0 && selectedGenres.map((item) => (
-          <div key={item}>
-            <h3>{item}</h3>
-          </div>
-        ))}
-
-        {playlists.map((item) => (
+        {/* {playlists.map((item) => (
           <div key={item.id}>
             <h1>{item.name}</h1>
             <img src={item.images[0]?.url} width="100" />
           </div>
-        ))}
+        ))} */}
       </>
     )
   }
