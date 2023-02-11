@@ -8,6 +8,8 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
 
 import GenreChips from "@/components/GenreChips"
+import MantineCard from '../components/MantineCard'
+import { Flex, Grid, SimpleGrid } from "@mantine/core"
 
 export default function Home() {
   const { data: session } = useSession()
@@ -39,6 +41,7 @@ export default function Home() {
       const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
       const data = await res.json()
       console.log(data)
+      setTopTracks(data)
       return data
     }
 
@@ -46,6 +49,7 @@ export default function Home() {
       const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
       const data = await res.json()
       console.log(data)
+      setTopArtists(data)
       return data
     }
 
@@ -132,6 +136,26 @@ export default function Home() {
 
         <GenreChips handleClick={handleGenreSelect} />
 
+        <SimpleGrid
+          cols={3}
+          spacing="lg"
+          breakpoints={[
+            { maxWidth: 'md', cols: 3, spacing: 'md' },
+            { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+            { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+          ]}
+        >
+          {recommendations.tracks && recommendations.tracks.map((item) => (
+            <div key={item.id}>
+              <MantineCard
+                title={item.name}
+                artist={item.artists.map((artist) => artist.name).join(', ')}
+                src={item.album.images[1].url}
+              />
+            </div>
+          ))}
+        </SimpleGrid>
+
         <h1>Song seeds</h1>
 
         {topTracks.items && topTracks.items.map((item) => (
@@ -152,17 +176,11 @@ export default function Home() {
 
         <h1>Genre Seeds</h1>
 
-        {/* {selectedGenres && selectedGenres.map((item) => (
+        {selectedGenres.length > 0 && selectedGenres.map((item) => (
           <div key={item}>
             <h3>{item}</h3>
           </div>
-        ))} */}
-
-        {/* {songs.tracks.items.length > 0 ? songs.tracks.items.map((item) => (
-          <div key={item.id}>
-            <p>{item.name}</p>
-          </div>
-        )) : <></>} */}
+        ))}
 
         {playlists.map((item) => (
           <div key={item.id}>
