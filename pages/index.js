@@ -7,9 +7,10 @@ import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
 
+import { SimpleGrid } from "@mantine/core"
 import GenreChips from "@/components/GenreChips"
 import MantineCard from '../components/MantineCard'
-import { SimpleGrid } from "@mantine/core"
+import MantineNav from "@/components/MantineNav"
 
 export default function Home() {
   const { data: session } = useSession()
