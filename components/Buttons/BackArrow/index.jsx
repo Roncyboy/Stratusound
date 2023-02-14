@@ -1,4 +1,4 @@
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import {AiOutlineClose} from 'react-icons/ai'
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 import { Spacer } from '../../Spacer';
@@ -15,7 +15,7 @@ export function BackArrow(props) {
     return (
         <>
             <ArrowCont>
-                <ArrowBackRoundedIcon margin={props.margin} onClick={() => r.back()}/>
+                <AiOutlineClose margin={props.margin} onClick={() => r.back()}/>
             </ArrowCont>
             <Spacer size = {45}/>
         </>
