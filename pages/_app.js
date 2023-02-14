@@ -11,7 +11,7 @@ export default function App({
 
   const links = [
     {
-      link: "/",
+      link: "/home",
       label: "Home"
     },
     {

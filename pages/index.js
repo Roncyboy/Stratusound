@@ -93,10 +93,14 @@ export default function Home() {
       const res = await axios.get(url)
       console.log(res.data)
       setWeather(res.data)
-      return res.data
+      localStorage.setItem('location', res.data.name);
+      // return res.data
     } catch (err) {
       console.log(err)
     }
+
+    console.log('search location done')
+
   }
 
   const handleGenreSelect = ({ genre }) => {
@@ -107,6 +111,8 @@ export default function Home() {
       setSelectedGenres([...selectedGenres, genre]);
       console.log(selectedGenres)
     }
+
+    localStorage.setItem('genres', selectedGenres);
   };
 
   function handleClick(id) {
@@ -154,6 +160,7 @@ export default function Home() {
           />
         </div>}
 
+        {/* These are based off recommendations, not weather */}
         <SimpleGrid
           cols={3}
           spacing="lg"
