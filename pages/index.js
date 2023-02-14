@@ -137,6 +137,19 @@ export default function Home() {
 
         <GenreChips handleClick={handleGenreSelect} />
 
+        <div className={styles.player}>
+          <iframe
+            className={styles.iframe}
+            allow="encrypted-media"
+            src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWF3yivn1m3D?utm_source=generator"
+            width="100%"
+
+            // 80 or 152
+            height="152"
+            title="Spotify Player"
+          />
+        </div>
+
         <SimpleGrid
           cols={3}
           spacing="lg"
