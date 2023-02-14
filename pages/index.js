@@ -16,6 +16,7 @@ export default function Home() {
   const { data: session } = useSession()
   const [playlists, setPlaylists] = useState([])
   const [songs, setSongs] = useState([])
+  const [playerId, setPlayerId] = useState('')
   const [location, setLocation] = useState('')
   const [weather, setWeather] = useState()
   const [selectedGenres, setSelectedGenres] = useState([])
@@ -110,6 +111,11 @@ export default function Home() {
     }
   };
 
+  function handleClick(id) {
+    setPlayerId(id)
+    console.log(id);
+  }
+
   if (session) {
     return (
       <>
@@ -137,18 +143,18 @@ export default function Home() {
 
         <GenreChips handleClick={handleGenreSelect} />
 
-        <div className={styles.player}>
+        {playerId.length > 0 && <div className={styles.player}>
           <iframe
             className={styles.iframe}
             allow="encrypted-media"
-            src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWF3yivn1m3D?utm_source=generator"
+            src={`https://open.spotify.com/embed/track/${playerId}?utm_source=generator&theme=0`}
             width="100%"
 
             // 80 or 152
             height="152"
             title="Spotify Player"
           />
-        </div>
+        </div>}
 
         <SimpleGrid
           cols={3}
@@ -164,7 +170,9 @@ export default function Home() {
               <MantineCard
                 title={item.name}
                 artist={item.artists.map((artist) => artist.name).join(', ')}
-                src={item.album.images[1].url}
+                img={item.album.images[1].url}
+                id={item.id}
+                handleClick={handleClick}
               />
             </div>
           ))}
