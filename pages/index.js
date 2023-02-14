@@ -65,8 +65,10 @@ export default function Home() {
       console.log(artistSeed)
       console.log(trackSeed)
 
+
       if (selectedGenres.length === 0) {
         setSelectedGenres(selectedGenres => selectedGenres.push('pop'))
+        console.log('push pop')
       }
 
       const res = await fetch(`/api/recommendations?limit=5&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
@@ -76,10 +78,6 @@ export default function Home() {
     }
 
     weather && getRecommendations()
-
-    if (selectedGenres.length === 0) {
-      setSelectedGenres(['pop'])
-    }
 
   }, [weather])
 
