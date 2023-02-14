@@ -1,11 +1,14 @@
 import { Card, Image, Text, Badge, Group } from '@mantine/core';
 
-export default function MantineCard({ src, title, artist }) {
+export default function MantineCard({ img, title, artist, handleClick, id }) {
   return (
-    <Card shadow="sm" p="lg" radius="md" withBorder>
+    <Card shadow="sm" p="lg" radius="md" withBorder onClick={() => {
+      console.log(id)
+      handleClick(id);
+    }}>
       <Card.Section>
         <Image
-          src={src}
+          src={img}
           height={160}
           alt="Norway"
         />
