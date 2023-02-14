@@ -1,0 +1,107 @@
+{
+    "curtains": [
+        {
+            "id": 1,
+            "name": "curtains",
+            "image": "/images/curtains.svg",
+            "selected": false
+        },
+        {
+            "id": 2,
+            "name": "curtains",
+            "image": "/images/curtains.svg",
+            "selected": false
+        },
+        {
+            "id": 3,
+            "name": "curtains",
+            "image": "/images/curtains.svg",
+            "selected": false
+        },
+        {
+            "id": 4,
+            "name": "curtains",
+            "image": "/images/curtains.svg",
+            "selected": false
+        }
+        
+    ],
+    "windowSill": [
+        {
+            "id": 1,
+            "name": "window",
+            "image": "/images/window.svg",
+            "selected": false
+        },
+        {
+            "id": 2,
+            "name": "window",
+            "image": "/images/window.svg",
+            "selected": false
+        },
+        {
+            "id": 3,
+            "name": "window",
+            "image": "/images/window.svg",
+            "selected": false
+        },
+        {
+            "id": 4,
+            "name": "window",
+            "image": "/images/window.svg",
+            "selected": false
+        }
+    ],
+    "backgroundScene" : [
+        {
+            "id": 1,
+            "name": "background",
+            "image": "/images/background.svg",
+            "selected": false
+        },
+        {
+            "id": 2,
+            "name": "background",
+            "image": "/images/background.svg",
+            "selected": false
+        },
+        {
+            "id": 3,
+            "name": "background",
+            "image": "/images/background.svg",
+            "selected": false
+        },
+        {
+            "id": 4,
+            "name": "background",
+            "image": "/images/background.svg",
+            "selected": false
+        }
+    ],
+    "roomScene": [
+        {
+            "id": 1,
+            "name": "room",
+            "image": "/images/room.svg",
+            "selected": false
+        },
+        {
+            "id": 2,
+            "name": "room",
+            "image": "/images/room.svg",
+            "selected": false
+        },
+        {
+            "id": 3,
+            "name": "room",
+            "image": "/images/room.svg",
+            "selected": false
+        },
+        {
+            "id": 4,
+            "name": "room",
+            "image": "/images/room.svg",
+            "selected": false
+        }
+    ]
+}
