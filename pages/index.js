@@ -67,8 +67,8 @@ export default function Home() {
 
 
       if (selectedGenres.length === 0) {
-        setSelectedGenres(selectedGenres => selectedGenres.push('pop'))
-        console.log('push pop')
+        setSelectedGenres(['pop', ...selectedGenres]);
+        console.log('push pop');
       }
 
       const res = await fetch(`/api/recommendations?limit=5&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
