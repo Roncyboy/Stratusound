@@ -16,6 +16,7 @@ export default function Home() {
   const { data: session } = useSession()
   const [playlists, setPlaylists] = useState([])
   const [songs, setSongs] = useState([])
+  const [playerId, setPlayerId] = useState('')
   const [location, setLocation] = useState('')
   const [weather, setWeather] = useState()
   const [selectedGenres, setSelectedGenres] = useState([])
@@ -64,8 +65,10 @@ export default function Home() {
       console.log(artistSeed)
       console.log(trackSeed)
 
+
       if (selectedGenres.length === 0) {
-        setSelectedGenres(selectedGenres => selectedGenres.push('pop'))
+        setSelectedGenres(['pop', ...selectedGenres]);
+        console.log('push pop');
       }
 
       const res = await fetch(`/api/recommendations?limit=5&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
@@ -75,10 +78,6 @@ export default function Home() {
     }
 
     weather && getRecommendations()
-
-    if (selectedGenres.length === 0) {
-      setSelectedGenres(['pop'])
-    }
 
   }, [weather])
 
@@ -110,6 +109,11 @@ export default function Home() {
     }
   };
 
+  function handleClick(id) {
+    setPlayerId(id)
+    console.log(id);
+  }
+
   if (session) {
     return (
       <>
@@ -137,6 +141,19 @@ export default function Home() {
 
         <GenreChips handleClick={handleGenreSelect} />
 
+        {playerId.length > 0 && <div className={styles.player}>
+          <iframe
+            className={styles.iframe}
+            allow="encrypted-media"
+            src={`https://open.spotify.com/embed/track/${playerId}?utm_source=generator&theme=0`}
+            width="100%"
+
+            // 80 or 152
+            height="152"
+            title="Spotify Player"
+          />
+        </div>}
+
         <SimpleGrid
           cols={3}
           spacing="lg"
@@ -151,7 +168,9 @@ export default function Home() {
               <MantineCard
                 title={item.name}
                 artist={item.artists.map((artist) => artist.name).join(', ')}
-                src={item.album.images[1].url}
+                img={item.album.images[1].url}
+                id={item.id}
+                handleClick={handleClick}
               />
             </div>
           ))}
