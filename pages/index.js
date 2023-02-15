@@ -81,6 +81,11 @@ export default function Home() {
 
   }, [weather])
 
+  useEffect(() => {
+    localStorage.setItem('genres', JSON.stringify(selectedGenres));
+    console.log(`save ${selectedGenres} to localstorage`)
+  }, [selectedGenres])
+
   const getMyPlaylists = async () => {
     const res = await fetch('/api/playlists');
     const { items } = await res.json();
@@ -94,6 +99,7 @@ export default function Home() {
       console.log(res.data)
       setWeather(res.data)
       localStorage.setItem('location', res.data.name);
+      console.log(`save ${res.data.name} to localstorage`)
       // return res.data
     } catch (err) {
       console.log(err)
@@ -104,15 +110,15 @@ export default function Home() {
   }
 
   const handleGenreSelect = ({ genre }) => {
+    let updatedGenres = [];
+
     if (selectedGenres.includes(genre)) {
-      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre));
-      console.log(selectedGenres)
+      updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
     } else {
-      setSelectedGenres([...selectedGenres, genre]);
-      console.log(selectedGenres)
+      updatedGenres = [...selectedGenres, genre];
     }
 
-    localStorage.setItem('genres', selectedGenres);
+    setSelectedGenres(updatedGenres);
   };
 
   function handleClick(id) {
