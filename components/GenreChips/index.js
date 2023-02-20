@@ -132,13 +132,14 @@ const genres = [
 
 // TODO: Make responsive, get selected genres from user account/local storage
 
-export default function GenreChips({ handleClick }) {
+export default function GenreChips({ handleClick, selectedGenres }) {
+
   return (
     <ScrollArea style={{ height: 240 }}>
       {/* ... content */}
       <Chip.Group multiple>
         {genres.map((genre, index) => (
-          <Chip genre={genre} variant="filled" key={index} value={genre} onClick={() => {
+          <Chip checked={selectedGenres.includes(genre) ? true : false} genre={genre} variant="filled" key={index} value={genre} onClick={() => {
             handleClick({ genre })
           }}>{genre}</Chip>
         ))}

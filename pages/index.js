@@ -167,7 +167,7 @@ export default function Home() {
         </div>}
 
         {/* These are based off recommendations, not weather */}
-        <SimpleGrid
+        {/* <SimpleGrid
           cols={3}
           spacing="lg"
           breakpoints={[
@@ -187,7 +187,7 @@ export default function Home() {
               />
             </div>
           ))}
-        </SimpleGrid>
+        </SimpleGrid> */}
 
         {/* {playlists.map((item) => (
           <div key={item.id}>

@@ -13,7 +13,7 @@ export default function Home() {
   const router = useRouter();
 
   const [location, setLocation] = useState("");
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState({});
   const [selectedGenres, setSelectedGenres] = useState([])
   const [weather, setWeather] = useState();
   const [songs, setSongs] = useState([]);
@@ -31,13 +31,22 @@ export default function Home() {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${units}&appid=${apiKey}&lang=${lang}`
 
   // Functions
+  // Get location and genres from local storage
   useEffect(() => {
     const location = localStorage.getItem("location");
-    const genres = localStorage.getItem("genres");
+    const genres = JSON.parse(localStorage.getItem("genres"));
 
     setLocation(location);
     setGenres(genres);
+    setSelectedGenres(genres);
+    console.log("Test", genres)
   }, [])
+
+  // Save genre selections to local storage
+  // useEffect(() => {
+  //   localStorage.setItem('genres', JSON.stringify(selectedGenres));
+  //   console.log(`save ${selectedGenres} to localstorage`)
+  // }, [selectedGenres])
 
   // Get the weather on after getting location from local storage
   useEffect(() => {
@@ -55,14 +64,6 @@ export default function Home() {
     }
   }, [location])
 
-  // Get playlists and recommendations
-  useEffect(() => {
-    if (weather) {
-      
-
-    }
-  }, [weather])
-
   // Redirect to login page if not logged in
   useEffect(() => {
     if (session === undefined) {
@@ -74,21 +75,12 @@ export default function Home() {
     }
   }, [session])
 
-  const getWeather = async () => {
-    try {
-      const res = await axios.get(url)
-      console.log(res.data)
-      setWeather(res.data)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
+  // Get recommendations and playlists
   useEffect(() => {
     const getSongs = async () => {
       const res = await fetch(`/api/songs?weather=${weather.weather[0].main}`)
       const data = await res.json()
-      console.log(data.playlists.items)
+      // console.log(data.playlists.items)
       setSongs(data.playlists.items)
       // console.log(songs)
     }
@@ -96,7 +88,7 @@ export default function Home() {
     const getTopTracks = async () => {
       const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       setTopTracks(data)
       return data
     }
@@ -104,7 +96,7 @@ export default function Home() {
     const getTopArtists = async () => {
       try {const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       setTopArtists(data)
       return data}
       catch (err) {
@@ -119,18 +111,17 @@ export default function Home() {
       const artistSeed = await topArtists.items[0].id
       const trackSeed = await topTracks.items[0].id
 
-      console.log(artistSeed)
-      console.log(trackSeed)
+      // console.log(artistSeed)
+      // console.log(trackSeed)
 
-
-      if (selectedGenres.length === 0) {
+      if (genres.length === 0) {
         setSelectedGenres(['pop', ...selectedGenres]);
         console.log('push pop');
       }
 
       const res = await fetch(`/api/recommendations?limit=5&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
       const data = await res.json()
-      console.log('These are the recommendations', data)
+      // console.log('These are the recommendations', data)
       setRecommendations(data)
     }
 
@@ -148,12 +139,13 @@ export default function Home() {
     }
 
     setSelectedGenres(updatedGenres);
+    localStorage.setItem('genres', JSON.stringify(updatedGenres));
   };
 
   function handleClick(id, type) {
     setPlayerId(id)
     setType(type)
-    console.log(id);
+    // console.log(id);
   }
 
   if (session) {
@@ -169,6 +161,7 @@ export default function Home() {
 
           <GenreChips
             handleClick={handleGenreSelect}
+            selectedGenres={selectedGenres}
           />
 
           {playerId.length > 0 && <div>
@@ -184,6 +177,30 @@ export default function Home() {
             />
           </div>}
 
+          <h2>Playlists for a rainy day</h2>
+          <SimpleGrid
+            cols={3}
+            spacing="lg"
+            breakpoints={[
+              { maxWidth: 'md', cols: 3, spacing: 'md' },
+              { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+              { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+            ]}
+          >
+            {songs && songs.map((item) => (
+              <div key={item.id}>
+                <MantineCard
+                  title={item.name}
+                  id={item.id}
+                  img={item.images[0].url}
+                  type="playlist"
+                  handleClick={handleClick}
+                />
+              </div>
+            ))}
+          </SimpleGrid>
+
+          <h2>Songs for a rainy day</h2>
           <SimpleGrid
             cols={3}
             spacing="lg"
@@ -206,17 +223,6 @@ export default function Home() {
               </div>
             ))}
           </SimpleGrid>
-
-          {songs && songs.map((item) => (
-            <div key={item.id}>
-              <MantineCard
-                title={item.name}
-                id={item.id}
-                type="playlist"
-                handleClick={handleClick}
-              />
-            </div>
-          ))}
         </div>
       )
     }
