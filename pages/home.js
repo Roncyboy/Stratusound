@@ -22,6 +22,7 @@ export default function Home() {
   const [topArtists, setTopArtists] = useState({})
   const [recommendations, setRecommendations] = useState({})
   const [playerId, setPlayerId] = useState('')
+  const [type, setType] = useState('')
 
 
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
@@ -83,20 +84,12 @@ export default function Home() {
     }
   }
 
-  const getSongs = async () => {
-    const res = await fetch(`/api/songs?weather=${weather.weather[0].main}`)
-    const data = await res.json()
-    // console.log(data)
-    setSongs(data)
-    // console.log(songs)
-  }
-
   useEffect(() => {
     const getSongs = async () => {
       const res = await fetch(`/api/songs?weather=${weather.weather[0].main}`)
       const data = await res.json()
-      // console.log(data)
-      setSongs(data)
+      console.log(data.playlists.items)
+      setSongs(data.playlists.items)
       // console.log(songs)
     }
 
@@ -141,7 +134,7 @@ export default function Home() {
       setRecommendations(data)
     }
 
-    weather && getRecommendations()
+    weather && getRecommendations() && getSongs()
 
   }, [weather])
 
@@ -157,8 +150,9 @@ export default function Home() {
     setSelectedGenres(updatedGenres);
   };
 
-  function handleClick(id) {
+  function handleClick(id, type) {
     setPlayerId(id)
+    setType(type)
     console.log(id);
   }
 
@@ -180,7 +174,7 @@ export default function Home() {
           {playerId.length > 0 && <div>
             <iframe
               allow="encrypted-media"
-              src={`https://open.spotify.com/embed/track/${playerId}?utm_source=generator&theme=0`}
+              src={`https://open.spotify.com/embed/${type}/${playerId}?utm_source=generator&theme=0`}
               width="100%"
 
               // 80 or 152
@@ -206,12 +200,23 @@ export default function Home() {
                   artist={item.artists.map((artist) => artist.name).join(', ')}
                   img={item.album.images[1].url}
                   id={item.id}
+                  type="track"
                   handleClick={handleClick}
                 />
               </div>
             ))}
           </SimpleGrid>
 
+          {songs && songs.map((item) => (
+            <div key={item.id}>
+              <MantineCard
+                title={item.name}
+                id={item.id}
+                type="playlist"
+                handleClick={handleClick}
+              />
+            </div>
+          ))}
         </div>
       )
     }
