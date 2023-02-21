@@ -83,7 +83,7 @@ export default function Home() {
     const getTopTracks = async () => {
       const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
       const data = await res.json()
-      console.log("Top Tracks", data)
+      // console.log("Top Tracks", data)
       setTopTracks(data)
       return data
     }
@@ -91,7 +91,7 @@ export default function Home() {
     const getTopArtists = async () => {
       try {const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
       const data = await res.json()
-      console.log("Top Artists", data)
+      // console.log("Top Artists", data)
       setTopArtists(data)
       return data}
       catch (err) {
@@ -109,12 +109,18 @@ export default function Home() {
       // console.log(artistSeed)
       // console.log(trackSeed)
 
-      if (genres === []) {
-        setSelectedGenres(['pop', ...selectedGenres]);
-        console.log('push pop');
+      let genreString = ''
+
+      for (let i = 0; i < selectedGenres.length; i++) {
+        genreString += selectedGenres[i] + ','
       }
 
-      const res = await fetch(`/api/recommendations?limit=9&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
+      if (genres === []) {
+        setSelectedGenres(['pop', ...selectedGenres]);
+        console.log('The pop genre was pushed to the selected genres array');
+      }
+
+      const res = await fetch(`/api/recommendations?limit=9&seed_artists=${artistSeed}&seed_genres=${genreString}&seed_tracks=${trackSeed}`)
       const data = await res.json()
       // console.log('These are the recommendations', data)
       setRecommendations(data)
@@ -128,11 +134,11 @@ export default function Home() {
     console.log(selectedGenres)
     let updatedGenres = []
 
-    // if (selectedGenres.includes(genre)) {
-    //   updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
-    // } else {
+    if (selectedGenres.includes(genre)) {
+      updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
+    } else {
       updatedGenres = [...selectedGenres, genre];
-    // }
+    }
 
     setSelectedGenres(updatedGenres);
     localStorage.setItem('genres', JSON.stringify(updatedGenres));
@@ -160,12 +166,6 @@ export default function Home() {
           <p>H: {weather.main.temp_max}</p>
           <p>L: {weather.main.temp_min}</p>
 
-          <h3>Select genres</h3>
-          <GenreChips
-            handleClick={handleGenreSelect}
-            selectedGenres={selectedGenres}
-          />
-
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
               allow="encrypted-media"
@@ -175,9 +175,25 @@ export default function Home() {
               // 80 or 152
               height="152"
               title="Spotify Player"
-              style={{border: "none"}}
+              style={{ border: "none" }}
             />
           </div>}
+
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <h3>Select genres</h3>
+          <GenreChips
+            handleClick={handleGenreSelect}
+            selectedGenres={selectedGenres}
+          />
+
+          <br />
+          <br />
+          <br />
+          <br />
 
           <h2>Playlists for a rainy day</h2>
           <SimpleGrid
@@ -201,6 +217,11 @@ export default function Home() {
               </div>
             ))}
           </SimpleGrid>
+
+          <br />
+          <br />
+          <br />
+          <br />
 
           <h2>Songs for a rainy day</h2>
           <SimpleGrid
