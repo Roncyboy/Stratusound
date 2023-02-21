@@ -3,6 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/router";
 import axios from "axios"
 import { SimpleGrid } from "@mantine/core"
+import styles from '@/styles/Home.module.css'
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
@@ -113,7 +114,7 @@ export default function Home() {
         console.log('push pop');
       }
 
-      const res = await fetch(`/api/recommendations?limit=5&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
+      const res = await fetch(`/api/recommendations?limit=9&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
       const data = await res.json()
       // console.log('These are the recommendations', data)
       setRecommendations(data)
@@ -151,7 +152,7 @@ export default function Home() {
     if (weather) {
       return (
         // TEMPORARY WHITE DARK MODE IS BROKEN
-        <div style={{color: "white"}}>
+        <div className={styles.wrapper} style={{color: "white"}}>
           <h1>Home</h1>
           <button onClick={handleLocalStorageClear}>Clear local storage</button>
           <p>Location: {location}</p>
@@ -165,10 +166,10 @@ export default function Home() {
             selectedGenres={selectedGenres}
           />
 
-          {playerId.length > 0 && <div>
+          {playerId.length > 0 && <div className={styles.player}>
             <iframe
               allow="encrypted-media"
-              src={`https://open.spotify.com/embed/${type}/${playerId}?utm_source=generator&theme=0`}
+              src={`https://open.spotify.com/embed/${type}/${playerId}?utm_source=generator&theme=1`}
               width="100%"
 
               // 80 or 152
