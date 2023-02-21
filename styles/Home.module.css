@@ -9,6 +9,7 @@
   bottom: 0;
   height: 152px;
   width: 100%;
-  background-color: #fff;
+  overflow: hidden;
   z-index: 9999;
+  border-radius: 1rem;
 }

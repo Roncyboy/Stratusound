@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/router";
 import axios from "axios"
-import { SimpleGrid } from "@mantine/core"
 import styles from '@/styles/Home.module.css'
+import { Loader, SimpleGrid } from "@mantine/core"
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
@@ -13,18 +13,18 @@ export default function Home() {
   const { data: session } = useSession()
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState("");
   const [genres, setGenres] = useState({});
   const [selectedGenres, setSelectedGenres] = useState([])
   const [weather, setWeather] = useState();
-  const [songs, setSongs] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [topTracks, setTopTracks] = useState({})
   const [topArtists, setTopArtists] = useState({})
   const [recommendations, setRecommendations] = useState({})
   const [playerId, setPlayerId] = useState('')
   const [type, setType] = useState('')
-
+  const [expand, setExpand] = useState(false)
 
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
   let lang = 'en'
@@ -32,6 +32,17 @@ export default function Home() {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${units}&appid=${apiKey}&lang=${lang}`
 
   // Functions
+  // Redirect to login page if not logged in
+  useEffect(() => {
+    if (session === undefined) {
+      return; // wait for authentication state to initialize
+    }
+    if (!session) {
+      router.push("/");
+      console.log("pushed");
+    }
+  }, [session])
+
   // Get location and genres from local storage
   useEffect(() => {
     const location = localStorage.getItem("location");
@@ -43,7 +54,7 @@ export default function Home() {
     console.log("Genres", genres)
   }, [])
 
-  // Get the weather on after getting location from local storage
+  // Get the weather after getting location from local storage
   useEffect(() => {
     if (location !== "") {
       const getWeather = async () => {
@@ -59,31 +70,20 @@ export default function Home() {
     }
   }, [location])
 
-  // Redirect to login page if not logged in
-  useEffect(() => {
-    if (session === undefined) {
-      return; // wait for authentication state to initialize
-    }
-    if (!session) {
-      router.push("/");
-      console.log("pushed");
-    }
-  }, [session])
-
   // Get recommendations and playlists
   useEffect(() => {
     const getWeatherPlaylists = async () => {
       const res = await fetch(`/api/weather-playlists?weather=${weather.weather[0].main}`)
       const data = await res.json()
       // console.log(data.playlists.items)
-      setSongs(data.playlists.items)
+      setPlaylists(data.playlists.items)
       // console.log(songs)
     }
 
     const getTopTracks = async () => {
       const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
       const data = await res.json()
-      console.log("Top Tracks", data)
+      // console.log("Top Tracks", data)
       setTopTracks(data)
       return data
     }
@@ -91,7 +91,7 @@ export default function Home() {
     const getTopArtists = async () => {
       try {const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
       const data = await res.json()
-      console.log("Top Artists", data)
+      // console.log("Top Artists", data)
       setTopArtists(data)
       return data}
       catch (err) {
@@ -109,12 +109,18 @@ export default function Home() {
       // console.log(artistSeed)
       // console.log(trackSeed)
 
-      if (genres === []) {
-        setSelectedGenres(['pop', ...selectedGenres]);
-        console.log('push pop');
+      let genreString = ''
+
+      for (let i = 0; i < selectedGenres.length; i++) {
+        genreString += selectedGenres[i] + ','
       }
 
-      const res = await fetch(`/api/recommendations?limit=9&seed_artists=${artistSeed}&seed_genres=${selectedGenres}&seed_tracks=${trackSeed}`)
+      if (genres === []) {
+        setSelectedGenres(['pop', ...selectedGenres]);
+        console.log('The pop genre was pushed to the selected genres array');
+      }
+
+      const res = await fetch(`/api/recommendations?limit=6&seed_artists=${artistSeed}&seed_genres=${genreString}&seed_tracks=${trackSeed}`)
       const data = await res.json()
       // console.log('These are the recommendations', data)
       setRecommendations(data)
@@ -122,17 +128,19 @@ export default function Home() {
 
     weather && getRecommendations() && getWeatherPlaylists()
 
+    setLoading(false)
+
   }, [weather])
 
   const handleGenreSelect = ({ genre }) => {
     console.log(selectedGenres)
     let updatedGenres = []
 
-    // if (selectedGenres.includes(genre)) {
-    //   updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
-    // } else {
+    if (selectedGenres.includes(genre)) {
+      updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
+    } else {
       updatedGenres = [...selectedGenres, genre];
-    // }
+    }
 
     setSelectedGenres(updatedGenres);
     localStorage.setItem('genres', JSON.stringify(updatedGenres));
@@ -151,20 +159,13 @@ export default function Home() {
   if (session) {
     if (weather) {
       return (
-        // TEMPORARY WHITE DARK MODE IS BROKEN
-        <div className={styles.wrapper} style={{color: "white"}}>
+        <div className={styles.wrapper}>
           <h1>Home</h1>
           <button onClick={handleLocalStorageClear}>Clear local storage</button>
           <p>Location: {location}</p>
           <p>{weather.weather[0].description}</p>
           <p>H: {weather.main.temp_max}</p>
           <p>L: {weather.main.temp_min}</p>
-
-          <h3>Select genres</h3>
-          <GenreChips
-            handleClick={handleGenreSelect}
-            selectedGenres={selectedGenres}
-          />
 
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
@@ -175,11 +176,32 @@ export default function Home() {
               // 80 or 152
               height="152"
               title="Spotify Player"
-              style={{border: "none"}}
+              style={{ border: "none" }}
             />
           </div>}
 
-          <h2>Playlists for a rainy day</h2>
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <h3>Select genres</h3>
+          <GenreChips
+            handleClick={handleGenreSelect}
+            selectedGenres={selectedGenres}
+            expand={expand}
+          />
+          <button onClick={() => { setExpand(!expand) }}>
+            {expand ? 'Collapse' : 'Expand'}
+          </button>
+
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
+          {loading ? <div><Loader /></div> :
           <SimpleGrid
             cols={3}
             spacing="lg"
@@ -189,20 +211,27 @@ export default function Home() {
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
             ]}
           >
-            {songs && songs.map((item) => (
+            {playlists && playlists.map((item) => (
               <div key={item.id}>
                 <MantineCard
                   title={item.name}
                   id={item.id}
                   img={item.images[0].url}
+                  alt={item.name}
                   type="playlist"
                   handleClick={handleClick}
                 />
               </div>
             ))}
           </SimpleGrid>
+          }
 
-          <h2>Songs for a rainy day</h2>
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <h2>Songs for a {(weather.weather[0].main).toLowerCase()} day</h2>
           <SimpleGrid
             cols={3}
             spacing="lg"
