@@ -1,5 +1,5 @@
 import { Chip, ScrollArea } from '@mantine/core';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const genres = [
   "acoustic",
@@ -132,13 +132,19 @@ const genres = [
 
 // TODO: Make responsive, get selected genres from user account/local storage
 
-export default function GenreChips({ handleClick }) {
+export default function GenreChips({ handleClick, selectedGenres }) {
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    setSelected(selectedGenres);
+  }, []);
+
   return (
     <ScrollArea style={{ height: 240 }}>
       {/* ... content */}
       <Chip.Group multiple>
         {genres.map((genre, index) => (
-          <Chip genre={genre} variant="filled" key={index} value={genre} onClick={() => {
+          <Chip checked={selectedGenres.includes(genre) ? true : false} genre={genre} variant="filled" key={index} value={genre} onClick={() => {
             handleClick({ genre })
           }}>{genre}</Chip>
         ))}
@@ -146,3 +152,6 @@ export default function GenreChips({ handleClick }) {
     </ScrollArea>
   );
 }
+
+// throws error on refresh
+// checked={selectedGenres.includes(genre) ? true : false} 

@@ -1,3 +1,14 @@
-.iframe {
-  border: none;
+
+
+.wrapper {
+  min-height: 100%;
+}
+
+.player {
+  position: fixed;
+  bottom: 0;
+  height: 152px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9999;
 }
