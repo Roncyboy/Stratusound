@@ -21,7 +21,7 @@ yarn dev
 - [Spotify](https://developer.spotify.com/documentation/web-api/)
 
 ## Tools used
--[x] Next.js 13
--[x] Maintine Core
--[x] Playwright for testing
--[x] Axios
+- [x] Next.js 13
+- [x] Maintine Core
+- [x] Playwright for testing
+- [x] Axios
