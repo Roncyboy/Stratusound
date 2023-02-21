@@ -41,7 +41,7 @@ export default function App({
             colors: {
               dark: [
                 //0 text color, 5 accent, 7 body background color
-                '#0e0e0e',
+                'white',
                 '#f6f6f6',
                 '#909296',
                 '#5C5F66',

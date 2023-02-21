@@ -87,7 +87,7 @@ export default function Home() {
           </div>
           : <></>}
 
-        <GenreChips handleClick={handleGenreSelect} selectedGenres={selectedGenres}/>
+        <GenreChips handleClick={handleGenreSelect} selectedGenres={selectedGenres} expand/>
       </>
     )
   }
