@@ -7,6 +7,7 @@ import { Loader, SimpleGrid } from "@mantine/core"
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
+import { Spacer } from "@/components/Spacer";
 
 export default function Home() {
   // Variables
@@ -180,11 +181,6 @@ export default function Home() {
             />
           </div>}
 
-          <br />
-          <br />
-          <br />
-          <br />
-
           <h3>Select genres</h3>
           <GenreChips
             handleClick={handleGenreSelect}
@@ -195,10 +191,7 @@ export default function Home() {
             {expand ? 'Collapse' : 'Expand'}
           </button>
 
-          <br />
-          <br />
-          <br />
-          <br />
+          <Spacer vertical size={100} />
 
           <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
           {loading ? <div><Loader /></div> :
@@ -206,6 +199,7 @@ export default function Home() {
             cols={3}
             spacing="lg"
             breakpoints={[
+              { maxWidth: 'lg', cols: 4, spacing: 'md' },
               { maxWidth: 'md', cols: 3, spacing: 'md' },
               { maxWidth: 'sm', cols: 2, spacing: 'sm' },
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
@@ -236,6 +230,7 @@ export default function Home() {
             cols={3}
             spacing="lg"
             breakpoints={[
+              { maxWidth: 'lg', cols: 4, spacing: 'md' },
               { maxWidth: 'md', cols: 3, spacing: 'md' },
               { maxWidth: 'sm', cols: 2, spacing: 'sm' },
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
