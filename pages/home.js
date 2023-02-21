@@ -39,14 +39,8 @@ export default function Home() {
     setLocation(location);
     setGenres(genres);
     setSelectedGenres(genres);
-    console.log("Test", genres)
+    console.log("Genres", genres)
   }, [])
-
-  // Save genre selections to local storage
-  // useEffect(() => {
-  //   localStorage.setItem('genres', JSON.stringify(selectedGenres));
-  //   console.log(`save ${selectedGenres} to localstorage`)
-  // }, [selectedGenres])
 
   // Get the weather on after getting location from local storage
   useEffect(() => {
@@ -77,8 +71,8 @@ export default function Home() {
 
   // Get recommendations and playlists
   useEffect(() => {
-    const getSongs = async () => {
-      const res = await fetch(`/api/songs?weather=${weather.weather[0].main}`)
+    const getWeatherPlaylists = async () => {
+      const res = await fetch(`/api/weather-playlists?weather=${weather.weather[0].main}`)
       const data = await res.json()
       // console.log(data.playlists.items)
       setSongs(data.playlists.items)
@@ -88,7 +82,7 @@ export default function Home() {
     const getTopTracks = async () => {
       const res = await fetch(`/api/topTracks?time_range=medium_large&limit=5`)
       const data = await res.json()
-      // console.log(data)
+      console.log("Top Tracks", data)
       setTopTracks(data)
       return data
     }
@@ -96,7 +90,7 @@ export default function Home() {
     const getTopArtists = async () => {
       try {const res = await fetch(`/api/topArtists?time_range=medium_large&limit=5`)
       const data = await res.json()
-      // console.log(data)
+      console.log("Top Artists", data)
       setTopArtists(data)
       return data}
       catch (err) {
@@ -114,7 +108,7 @@ export default function Home() {
       // console.log(artistSeed)
       // console.log(trackSeed)
 
-      if (genres.length === 0) {
+      if (genres === []) {
         setSelectedGenres(['pop', ...selectedGenres]);
         console.log('push pop');
       }
@@ -125,18 +119,19 @@ export default function Home() {
       setRecommendations(data)
     }
 
-    weather && getRecommendations() && getSongs()
+    weather && getRecommendations() && getWeatherPlaylists()
 
   }, [weather])
 
   const handleGenreSelect = ({ genre }) => {
-    let updatedGenres = [];
+    console.log(selectedGenres)
+    let updatedGenres = []
 
-    if (selectedGenres.includes(genre)) {
-      updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
-    } else {
+    // if (selectedGenres.includes(genre)) {
+    //   updatedGenres = selectedGenres.filter(selectedGenre => selectedGenre !== genre);
+    // } else {
       updatedGenres = [...selectedGenres, genre];
-    }
+    // }
 
     setSelectedGenres(updatedGenres);
     localStorage.setItem('genres', JSON.stringify(updatedGenres));
@@ -148,17 +143,23 @@ export default function Home() {
     // console.log(id);
   }
 
+  function handleLocalStorageClear() {
+    localStorage.clear()
+  }
+
   if (session) {
     if (weather) {
       return (
         // TEMPORARY WHITE DARK MODE IS BROKEN
         <div style={{color: "white"}}>
           <h1>Home</h1>
+          <button onClick={handleLocalStorageClear}>Clear local storage</button>
           <p>Location: {location}</p>
           <p>{weather.weather[0].description}</p>
           <p>H: {weather.main.temp_max}</p>
           <p>L: {weather.main.temp_min}</p>
 
+          <h3>Select genres</h3>
           <GenreChips
             handleClick={handleGenreSelect}
             selectedGenres={selectedGenres}
