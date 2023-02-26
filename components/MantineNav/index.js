@@ -3,6 +3,8 @@ import { createStyles, Header, Container, Group, Burger, Paper, Transition } fro
 import { useDisclosure } from '@mantine/hooks';
 import { useRouter } from "next/router";
 
+import ThemeToggle from "../ThemeToggle";
+
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
@@ -101,6 +103,7 @@ export default function HeaderResponsive({ links }) {
       <Container className={classes.header}>
         <Group spacing={5} className={classes.links}>
           {items}
+          <ThemeToggle />
         </Group>
 
         <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
@@ -109,6 +112,7 @@ export default function HeaderResponsive({ links }) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
+              <ThemeToggle />
             </Paper>
           )}
         </Transition>

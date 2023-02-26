@@ -1,3 +1,16 @@
-.iframe {
-  border: none;
+
+
+.wrapper {
+  min-height: 100%;
+  padding: 1rem;
+}
+
+.player {
+  position: fixed;
+  bottom: 0;
+  height: 152px;
+  width: 100%;
+  overflow: hidden;
+  z-index: 9999;
+  border-radius: 1rem;
 }

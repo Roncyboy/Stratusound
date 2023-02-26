@@ -9,10 +9,12 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [colorScheme, setColorScheme] = useState('light');
+  const toggleColorScheme = (value) => setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   const links = [
     {
-      link: "/",
+      link: "/home",
       label: "Home"
     },
     {
@@ -31,17 +33,16 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
-      {/* <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}> */}
+      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <MantineProvider 
           withGlobalStyles 
           withCSSVariables 
           theme={{ 
-            // colorScheme,
-            colorScheme: 'dark',
+            colorScheme,
             colors: {
               dark: [
                 //0 text color, 5 accent, 7 body background color
-                '#0e0e0e',
+                'white',
                 '#f6f6f6',
                 '#909296',
                 '#5C5F66',
@@ -139,10 +140,10 @@ export default function App({
               ], 
             }
           }}>
-          <MantineNav links={links} />
+          <MantineNav links={links} toggleColorScheme={toggleColorScheme}/>
           <Component {...pageProps} />
         </MantineProvider>
-      {/* </ColorSchemeProvider> */}
+      </ColorSchemeProvider>
     </SessionProvider>
   )
 }
