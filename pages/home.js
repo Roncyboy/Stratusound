@@ -8,6 +8,7 @@ import { Loader, SimpleGrid } from "@mantine/core"
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
+import WeatherCard from "@/components/WeatherCard";
 
 export default function Home() {
   // Variables
@@ -104,10 +105,25 @@ export default function Home() {
       const topArtists = await getTopArtists()
       const topTracks = await getTopTracks()
 
-      const artistSeed = await topArtists.items[0].id
+      // We're getting the top 5 artists, so choose 2 from them
+
+      let randomNumber = []
+      while (randomNumber.length < 2) {
+        var r = Math.floor(Math.random() * 4) + 1;
+        if (randomNumber.indexOf(r) === -1) randomNumber.push(r);
+      }
+      console.log(randomNumber);
+
+
+      console.log(topArtists)
+
+      const artistSeed = await topArtists.items[randomNumber[0]].id
+      const secondArtistSeed = await topArtists.items[randomNumber[1]].id
+      const artistSeeds = [artistSeed, secondArtistSeed]
+
       const trackSeed = await topTracks.items[0].id
 
-      // console.log(artistSeed)
+      console.log(artistSeeds)
       // console.log(trackSeed)
 
       let genreString = ''
@@ -121,7 +137,13 @@ export default function Home() {
         console.log('The pop genre was pushed to the selected genres array');
       }
 
-      const res = await fetch(`/api/recommendations?limit=6&seed_artists=${artistSeed}&seed_genres=${genreString}&seed_tracks=${trackSeed}`)
+      // Limit genres to 2 because 
+      // You need one seed at least for artist, genre, and track
+      // You can have max 2 seeds for artists, max 2 seeds for tracks, and max 3 seeds for genres
+      // If you have more than 1 seed for artists, you can’t have more than 2 seeds for genres or 1 seed for tracks
+      // If you have more than 2 seeds for genres, you can’t have more than 1 seed each for artists or tracks
+      // If you have more than 1 seed for tracks, you can’t have more than 2 seeds for genres or 1 seed for artists
+      const res = await fetch(`/api/recommendations?limit=6&seed_artists=${artistSeeds}&seed_genres=${genreString.slice(0, 2)}&seed_tracks=${trackSeed}`)
       const data = await res.json()
       // console.log('These are the recommendations', data)
       setRecommendations(data)
@@ -163,10 +185,15 @@ export default function Home() {
         <div className={styles.wrapper}>
           <h1>Home</h1>
           <button onClick={handleLocalStorageClear}>Clear local storage</button>
-          <p>Location: {location}</p>
-          <p>{weather.weather[0].description}</p>
-          <p>H: {weather.main.temp_max}</p>
-          <p>L: {weather.main.temp_min}</p>
+
+          <WeatherCard
+            location={location}
+            description={weather.weather[0].description}
+            high={weather.main.temp_max}
+            low={weather.main.temp_min}
+            main={weather.main.temp.toFixed(0)}
+            weather={weather.weather[0].main}
+          />
 
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
