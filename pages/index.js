@@ -11,7 +11,8 @@ import GenreChips from "@/components/GenreChips"
 
 import MantineCard from '../components/MantineCard'
 import MantineNav from "@/components/MantineNav"
-import CurrentWeather, { EmptyWeather } from '@/components/CurrentWeather'
+import EmptyWeather from '@/components/CurrentWeather'
+import {CurrentWeather} from '@/components/CurrentWeather'
 
 export default function Home() {
   const { data: session } = useSession()

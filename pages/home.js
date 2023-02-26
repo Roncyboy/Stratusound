@@ -192,6 +192,7 @@ export default function Home() {
             high={weather.main.temp_max}
             low={weather.main.temp_min}
             main={weather.main.temp.toFixed(0)}
+            weather={weather.weather[0].main}
           />
 
           {playerId.length > 0 && <div className={styles.player}>
