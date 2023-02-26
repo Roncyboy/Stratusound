@@ -8,6 +8,7 @@ import { Loader, SimpleGrid } from "@mantine/core"
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
+import WeatherCard from "@/components/WeatherCard";
 
 export default function Home() {
   // Variables
@@ -184,10 +185,14 @@ export default function Home() {
         <div className={styles.wrapper}>
           <h1>Home</h1>
           <button onClick={handleLocalStorageClear}>Clear local storage</button>
-          <p>Location: {location}</p>
-          <p>{weather.weather[0].description}</p>
-          <p>H: {weather.main.temp_max}</p>
-          <p>L: {weather.main.temp_min}</p>
+
+          <WeatherCard
+            location={location}
+            description={weather.weather[0].description}
+            high={weather.main.temp_max}
+            low={weather.main.temp_min}
+            main={weather.main.temp.toFixed(0)}
+          />
 
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
