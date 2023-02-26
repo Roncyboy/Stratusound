@@ -1,3 +1,7 @@
+.flexEnd{
+  align-self: flex-end;
+}
+
 /* Box sizing rules */
 *,
 *::before,

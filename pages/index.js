@@ -11,6 +11,7 @@ import { SimpleGrid } from "@mantine/core"
 import GenreChips from "@/components/GenreChips"
 import MantineCard from '../components/MantineCard'
 import MantineNav from "@/components/MantineNav"
+import CurrentWeather, { EmptyWeather } from '@/components/CurrentWeather'
 
 export default function Home() {
   const { data: session } = useSession()
@@ -122,22 +123,27 @@ export default function Home() {
 
         <hr />
 
-        <input
+        {/* <input
           value={location}
           onChange={event => setLocation(event.target.value)}
           placeholder='Enter location'
           type='text'
         />
-        <button onClick={() => searchLocation()}>Search</button>
+        <button onClick={() => searchLocation()}>Search</button> */}
         {/* <button onClick={() => getMyPlaylists()}>Get playlists</button> */}
 
         {weather ?
-          <div>
-            <p>{weather.name}</p>
-            <p>{weather.main.temp} Celsius</p>
-            <p>{weather.weather[0].description}</p>
-          </div>
-          : <></>}
+          <CurrentWeather 
+          name = {weather.name} 
+          temp = {weather.main.temp} 
+          description = {weather.weather[0].description}
+          onSearch = {() => searchLocation()} 
+          onChange = {event => setLocation(event.target.value)}
+          location = {location}/>
+          : <EmptyWeather
+          onSearch = {() => searchLocation()} 
+          onChange = {event => setLocation(event.target.value)}
+          location = {location}/>}
 
         <GenreChips handleClick={handleGenreSelect} />
 
