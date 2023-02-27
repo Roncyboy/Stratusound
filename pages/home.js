@@ -112,19 +112,11 @@ export default function Home() {
         var r = Math.floor(Math.random() * 4) + 1;
         if (randomNumber.indexOf(r) === -1) randomNumber.push(r);
       }
-      console.log(randomNumber);
-
-
-      console.log(topArtists)
 
       const artistSeed = await topArtists.items[randomNumber[0]].id
       const secondArtistSeed = await topArtists.items[randomNumber[1]].id
       const artistSeeds = [artistSeed, secondArtistSeed]
-
       const trackSeed = await topTracks.items[0].id
-
-      console.log(artistSeeds)
-      // console.log(trackSeed)
 
       let genreString = ''
 
@@ -183,8 +175,8 @@ export default function Home() {
     if (weather) {
       return (
         <div className={styles.wrapper}>
-          <h1>Home</h1>
-          <button onClick={handleLocalStorageClear}>Clear local storage</button>
+          {/* <h1>Home</h1> */}
+          {/* <button onClick={handleLocalStorageClear}>Clear local storage</button> */}
 
           <WeatherCard
             location={location}
@@ -194,6 +186,8 @@ export default function Home() {
             main={weather.main.temp.toFixed(0)}
             weather={weather.weather[0].main}
           />
+
+          <Spacer vertical size={100} />
 
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
