@@ -112,7 +112,9 @@ export default function HeaderResponsive({ links }) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
+              <div style={{marginLeft: "1rem"}}>
               <ThemeToggle />
+              </div>
             </Paper>
           )}
         </Transition>
