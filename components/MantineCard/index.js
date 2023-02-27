@@ -15,7 +15,7 @@ export default function MantineCard({ img, title, artist, handleClick, id, type,
       </Card.Section>
 
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{title}</Text>
+        <Text weight={500} truncate>{title}</Text>
       </Group>
 
       <Text size="sm" color="dimmed">

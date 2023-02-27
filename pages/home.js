@@ -218,7 +218,7 @@ export default function Home() {
           <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
           {loading ? <div><Loader /></div> :
           <SimpleGrid
-            cols={3}
+            cols={6}
             spacing="lg"
             breakpoints={[
               { maxWidth: 'lg', cols: 4, spacing: 'lg' },
