@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaExpandAlt, FaCompressAlt } from 'react-icons/fa';
 import { useState } from "react";
 import styled from "styled-components";
+import { WeatherLotties } from "../Lotties/WeatherLotties";
 
 const StyledInput = styled.input`
 `;
@@ -32,16 +33,20 @@ export function CurrentWeather({
       </Flex>
       {expanded ? (
         <FaCompressAlt
-          size={35}
+          size={25}
           className="flexEnd"
           onClick={changeExpanded}
         />
       ) : (
-        <FaExpandAlt className="flexEnd" onClick={changeExpanded} />
+        <FaExpandAlt 
+        size={25} 
+        className="flexEnd" 
+        onClick={changeExpanded} />
       )}
       <div>{name}</div>
       <div>{temp}</div>
       <div>{description}</div>
+      <div> <WeatherLotties weather = {'clear'} /></div>
       {expanded && <div>hidden weather things</div>}
     </Flex>
   );
