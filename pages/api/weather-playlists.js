@@ -1,4 +1,4 @@
-import { getSongs } from '../../lib/spotify';
+import { getWeatherPlaylists } from '../../lib/spotify';
 import { getSession } from 'next-auth/react';
 
 const handler = async (req, res) => {
@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     token: { accessToken },
   } = await getSession({ req });
   const weather = req.query.weather;
-  const songs = await getSongs(accessToken, weather);
+  const songs = await getWeatherPlaylists(accessToken, weather);
   const data = await songs.json();
 
   return res.status(200).json(data);
