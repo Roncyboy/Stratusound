@@ -156,11 +156,18 @@ export default function GenreChips({ handleClick, selectedGenres, expand }) {
       <ScrollArea style={{ height: 120, transition: "0.25s" }}>
         {/* ... content */}
         <Chip.Group multiple>
-          {genres.map((genre, index) => (
+          {/* {genres.map((genre, index) => (
+            <Chip checked={selectedGenres.includes(genre) ? true : false} genre={genre} variant="filled" key={index} value={genre} onClick={() => {
+              handleClick({ genre })
+            }}>{genre}</Chip>
+          ))} */}
+          {selectedGenres.map((genre, index) => (
             <Chip checked={selectedGenres.includes(genre) ? true : false} genre={genre} variant="filled" key={index} value={genre} onClick={() => {
               handleClick({ genre })
             }}>{genre}</Chip>
           ))}
+
+
         </Chip.Group>
       </ScrollArea>
     );
