@@ -7,10 +7,8 @@
 
 .player {
   position: fixed;
-  bottom: 0;
-  height: 152px;
-  width: 100%;
-  overflow: hidden;
+  bottom: 1rem;
   z-index: 9999;
-  border-radius: 1rem;
+  width: 100%;
+  padding-right: 2rem;
 }

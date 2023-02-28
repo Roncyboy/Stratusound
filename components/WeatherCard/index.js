@@ -8,7 +8,6 @@ export default function WeatherCard({ location, description, high, low, main, we
   const theme = useMantineTheme();
 
   let accentColor = 'blue'
-  console.log(weather)
   if (weather === 'Clear') {
     accentColor = theme.colors.clear[5]
   } else if (weather === 'Clouds') {
