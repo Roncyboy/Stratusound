@@ -27,7 +27,7 @@ export function CurrentWeather({
   }
 
   let weather = main;
-  console.log(weather)
+  // console.log(weather)
 
   return (
     <Flex as={motion.div} padding="2em">

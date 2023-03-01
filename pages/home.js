@@ -78,9 +78,8 @@ export default function Home() {
     const getWeatherPlaylists = async () => {
       const res = await fetch(`/api/weather-playlists?weather=${weather.weather[0].main}`)
       const data = await res.json()
-      // console.log(data.playlists.items)
+      console.log(data.playlists.items)
       setPlaylists(data.playlists.items)
-      // console.log(songs)
     }
 
     const getTopTracks = async () => {
@@ -246,35 +245,6 @@ export default function Home() {
 
           <Spacer vertical size={64} />
 
-          <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
-          {loading ? <div><Loader /></div> :
-          <SimpleGrid
-            cols={6}
-            spacing="lg"
-            breakpoints={[
-              { maxWidth: 'lg', cols: 4, spacing: 'lg' },
-              { maxWidth: 'md', cols: 3, spacing: 'md' },
-              { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-              { maxWidth: 'xs', cols: 1, spacing: 'sm' },
-            ]}
-          >
-            {playlists && playlists.map((item) => (
-              <div key={item.id}>
-                <MantineCard
-                  title={item.name}
-                  id={item.id}
-                  img={item.images[0].url}
-                  alt={item.name}
-                  type="playlist"
-                  handleClick={handleClick}
-                />
-              </div>
-            ))}
-          </SimpleGrid>
-          }
-
-          <Spacer vertical size={64} />
-
           <h2>Songs for a {(weather.weather[0].main).toLowerCase()} day</h2>
           <SimpleGrid
             cols={3}
@@ -299,6 +269,36 @@ export default function Home() {
               </div>
             ))}
           </SimpleGrid>
+
+          <Spacer vertical size={64} />
+
+          <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
+          {loading ? <div><Loader /></div> :
+            <SimpleGrid
+              cols={6}
+              spacing="lg"
+              breakpoints={[
+                { maxWidth: 'lg', cols: 4, spacing: 'lg' },
+                { maxWidth: 'md', cols: 3, spacing: 'md' },
+                { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+                { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+              ]}
+            >
+              {playlists && playlists.map((item) => (
+                <div key={item.id}>
+                  <MantineCard
+                    title={item.name}
+                    id={item.id}
+                    img={item.images[0].url}
+                    alt={item.name}
+                    type="playlist"
+                    handleClick={handleClick}
+                  />
+                </div>
+              ))}
+            </SimpleGrid>
+          }
+          <Spacer vertical size={64} />
         </div>
       )
     }
