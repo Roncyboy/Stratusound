@@ -298,7 +298,7 @@ export default function Home() {
               ))}
             </SimpleGrid>
           }
-          <Spacer vertical size={64} />
+          <Spacer vertical size={164} />
         </div>
       )
     }
