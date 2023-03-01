@@ -89,6 +89,7 @@ export default function Home() {
           name = {weather.name} 
           temp = {weather.main.temp} 
           description = {weather.weather[0].description}
+          main = {weather.weather[0].main}
           onSearch = {() => searchLocation()} 
           onChange = {event => setLocation(event.target.value)}
           location = {location}/>

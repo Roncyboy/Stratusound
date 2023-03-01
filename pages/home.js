@@ -9,6 +9,7 @@ import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
 import WeatherCard from "@/components/WeatherCard";
+import { CurrentWeather } from "@/components/CurrentWeather";
 
 export default function Home() {
   // Variables
@@ -171,6 +172,22 @@ export default function Home() {
     localStorage.clear()
   }
 
+  const searchLocation = async () => {
+    try {
+      const res = await axios.get(url)
+      console.log(res.data)
+      setWeather(res.data)
+      localStorage.setItem('location', res.data.name);
+      console.log(`save ${res.data.name} to localstorage`)
+      // return res.data
+    } catch (err) {
+      console.log(err)
+    }
+
+    console.log('search location done')
+
+  }
+
   if (session) {
     if (weather) {
       return (
@@ -180,14 +197,28 @@ export default function Home() {
 
           <Spacer vertical size={64} />
 
-          <WeatherCard
+          {/* <WeatherCard
             location={location}
             description={weather.weather[0].description}
             high={weather.main.temp_max}
             low={weather.main.temp_min}
             main={weather.main.temp.toFixed(0)}
             weather={weather.weather[0].main}
-          />
+          /> */}
+
+          {weather ?
+            <CurrentWeather
+              name={weather.name}
+              temp={weather.main.temp}
+              description={weather.weather[0].description}
+              main={weather.weather[0].main}
+              onSearch={() => searchLocation()}
+              onChange={event => setLocation(event.target.value)}
+              location={location} />
+            : <EmptyWeather
+              onSearch={() => searchLocation()}
+              onChange={event => setLocation(event.target.value)}
+              location={location} />}
 
           <Spacer vertical size={64} />
 

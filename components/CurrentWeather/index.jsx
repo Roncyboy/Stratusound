@@ -15,6 +15,7 @@ export function CurrentWeather({
   name,
   temp,
   description,
+  main,
   onSearch,
   onChange,
   location,
@@ -24,6 +25,9 @@ export function CurrentWeather({
   function changeExpanded() {
     setExpanded(!expanded);
   }
+
+  let weather = main;
+  console.log(weather)
 
   return (
     <Flex as={motion.div} padding="2em">
@@ -46,7 +50,9 @@ export function CurrentWeather({
       <div>{name}</div>
       <div>{temp}</div>
       <div>{description}</div>
-      <div> <WeatherLotties weather = {'clear'} /></div>
+      <div>
+        <WeatherLotties weather={`${weather}`} />
+      </div>
       {expanded && <div>hidden weather things</div>}
     </Flex>
   );
