@@ -3,12 +3,11 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/router";
 import axios from "axios"
 import styles from '@/styles/Home.module.css'
-import { Loader, SimpleGrid } from "@mantine/core"
+import { SimpleGrid, Loader } from "@mantine/core"
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
-import WeatherCard from "@/components/WeatherCard";
 import { CurrentWeather } from "@/components/CurrentWeather";
 
 export default function Home() {
@@ -17,6 +16,7 @@ export default function Home() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(true)
+  const [fakeLoading, setFakeLoading] = useState(true)
   const [location, setLocation] = useState("");
   const [genres, setGenres] = useState({});
   const [selectedGenres, setSelectedGenres] = useState([])
@@ -147,6 +147,13 @@ export default function Home() {
 
   }, [weather])
 
+  // Fake loading effect to prevent flickers
+  useEffect(() => {
+    setTimeout(() => {
+      setFakeLoading(false)
+    }, 1500)
+  }, [])
+
   const handleGenreSelect = ({ genre }) => {
     console.log(selectedGenres)
     let updatedGenres = []
@@ -189,6 +196,13 @@ export default function Home() {
 
   if (session) {
     if (weather) {
+      if (fakeLoading) {
+        return (
+          <div style={{width: "100%", display: "grid", placeContent: "center", height: "100vh"}}>
+            <Loader />
+          </div>
+        )
+      } else {
       return (
         <div className={styles.wrapper}>
           {/* <h1>Home</h1> */}
@@ -213,13 +227,15 @@ export default function Home() {
               main={weather.weather[0].main}
               onSearch={() => searchLocation()}
               onChange={event => setLocation(event.target.value)}
-              location={location} />
+              location={location}
+              max={weather.main.temp_max}
+              min={weather.main.temp_min}
+              weather={weather}
+            />
             : <EmptyWeather
               onSearch={() => searchLocation()}
               onChange={event => setLocation(event.target.value)}
               location={location} />}
-
-          <Spacer vertical size={64} />
 
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
@@ -232,6 +248,8 @@ export default function Home() {
               style={{borderRadius: "1rem", border: "none"}}
             />
           </div>}
+
+          <Spacer vertical size={64} />
 
           <h3>Select genres</h3>
           <GenreChips
@@ -250,10 +268,10 @@ export default function Home() {
             cols={3}
             spacing="lg"
             breakpoints={[
-              { maxWidth: 'lg', cols: 4, spacing: 'lg' },
-              { maxWidth: 'md', cols: 3, spacing: 'md' },
-              { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-              { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+              { maxWidth: 'lg', cols: 5, spacing: 'lg' },
+              { maxWidth: 'md', cols: 4, spacing: 'md' },
+              { maxWidth: 'sm', cols: 3, spacing: 'sm' },
+              { maxWidth: 'xs', cols: 2, spacing: 'sm' },
             ]}
           >
             {recommendations.tracks && recommendations.tracks.map((item) => (
@@ -278,10 +296,10 @@ export default function Home() {
               cols={6}
               spacing="lg"
               breakpoints={[
-                { maxWidth: 'lg', cols: 4, spacing: 'lg' },
-                { maxWidth: 'md', cols: 3, spacing: 'md' },
-                { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-                { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+                { maxWidth: 'lg', cols: 5, spacing: 'lg' },
+                { maxWidth: 'md', cols: 4, spacing: 'md' },
+                { maxWidth: 'sm', cols: 3, spacing: 'sm' },
+                { maxWidth: 'xs', cols: 2, spacing: 'sm' },
               ]}
             >
               {playlists && playlists.map((item) => (
@@ -303,5 +321,5 @@ export default function Home() {
       )
     }
   }
-
+  }
 }

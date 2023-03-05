@@ -70,29 +70,24 @@ export default function Home() {
   if (session) {
     return (
       <>
-        <p>Signed in {session?.token?.email}</p>
+        {/* <p>Signed in {session?.token?.email}</p>
         <button onClick={() => signOut()}>Sign out</button>
 
-        <hr />
-
-        {/* <input
-          value={location}
-          onChange={event => setLocation(event.target.value)}
-          placeholder='Enter location'
-          type='text'
-        />
-        <button onClick={() => searchLocation()}>Search</button> */}
-        {/* <button onClick={() => getMyPlaylists()}>Get playlists</button> */}
+        <hr /> */}
 
         {weather ?
           <CurrentWeather 
-          name = {weather.name} 
-          temp = {weather.main.temp} 
-          description = {weather.weather[0].description}
-          main = {weather.weather[0].main}
-          onSearch = {() => searchLocation()} 
-          onChange = {event => setLocation(event.target.value)}
-          location = {location}/>
+            weather={weather}
+            name = {weather.name} 
+            temp = {weather.main.temp} 
+            description = {weather.weather[0].description}
+            main = {weather.weather[0].main}
+            onSearch = {() => searchLocation()} 
+            onChange = {event => setLocation(event.target.value)}
+            location = {location}
+            max={weather.main.temp_max}
+            min={weather.main.temp_min}
+          />
           : <EmptyWeather
           onSearch = {() => searchLocation()} 
           onChange = {event => setLocation(event.target.value)}
