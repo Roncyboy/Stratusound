@@ -2,13 +2,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import Carousel from "framer-motion-carousel";
 
 import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
 
 import GenreChips from "@/components/GenreChips"
-
 import MantineCard from '../components/MantineCard'
 import MantineNav from "@/components/MantineNav"
 import EmptyWeather from '@/components/CurrentWeather'
@@ -101,6 +101,24 @@ export default function Home() {
     <>
       Not signed in <br />
       <button onClick={() => signIn()}>Sign in</button>
+      <div style={{ width: 400, height: 600, margin: "0 auto" }}>
+        <Carousel
+          interval={7500}
+          loop={true}
+          autoPlay={true}
+        >
+          {[1, 2, 3, 4].map((item, i) => (
+            <img
+              draggable="false"
+              src={`./carousel/${item}.jpg`}
+              key={i}
+              width="100%"
+              height="100%"
+              alt=""
+            />
+          ))}
+        </Carousel>
+      </div>
     </>
   )
 }
