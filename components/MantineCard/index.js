@@ -23,12 +23,12 @@ export default function MantineCard({ img, title, artist, handleClick, id, type,
       <Card.Section>
         <Image
           src={img}
-          height={240}
+          height={200}
           alt={alt}
         />
       </Card.Section>
 
-      <Group position="apart" mt="md" mb="xs">
+      <Group position="apart" mt="lg" mb="xs">
         <Text weight={500} truncate>{title}</Text>
       </Group>
 

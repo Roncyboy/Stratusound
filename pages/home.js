@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios"
 import styles from '@/styles/Home.module.css'
 import { SimpleGrid, Loader } from "@mantine/core"
+import {motion, AnimatePresence} from "framer-motion"
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
@@ -189,9 +190,7 @@ export default function Home() {
     } catch (err) {
       console.log(err)
     }
-
     console.log('search location done')
-
   }
 
   if (session) {
@@ -271,8 +270,13 @@ export default function Home() {
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
             ]}
           >
-            {recommendations.tracks && recommendations.tracks.map((item) => (
-              <div key={item.id}>
+          <AnimatePresence>
+            {recommendations.tracks && recommendations.tracks.map((item, i) => (
+              <motion.div key={item.id}
+                initial={{ opacity: 0, translateX: 50, translateY: -20 }}
+                animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
                 <MantineCard
                   title={item.name}
                   artist={item.artists.map((artist) => artist.name).join(', ')}
@@ -281,8 +285,9 @@ export default function Home() {
                   type="track"
                   handleClick={handleClick}
                 />
-              </div>
+              </motion.div>
             ))}
+            </AnimatePresence>
           </SimpleGrid>
 
           <Spacer vertical size={64} />
@@ -299,8 +304,12 @@ export default function Home() {
                 { maxWidth: 'xs', cols: 1, spacing: 'sm' },
               ]}
             >
-              {playlists && playlists.map((item) => (
-                <div key={item.id}>
+              {playlists && playlists.map((item, i) => (
+                <motion.div key={item.id}
+                  initial={{ opacity: 0, translateX: 50, translateY: -20 }}
+                  animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
                   <MantineCard
                     title={item.name}
                     id={item.id}
@@ -309,7 +318,7 @@ export default function Home() {
                     type="playlist"
                     handleClick={handleClick}
                   />
-                </div>
+                </motion.div>
               ))}
             </SimpleGrid>
           }
