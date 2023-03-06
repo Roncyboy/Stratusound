@@ -9,10 +9,10 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
 
 import GenreChips from "@/components/GenreChips"
-import MantineCard from '../components/MantineCard'
-import MantineNav from "@/components/MantineNav"
 import EmptyWeather from '@/components/CurrentWeather'
 import {CurrentWeather} from '@/components/CurrentWeather'
+import { Spacer } from "@/components/Spacer";
+import Link from "next/link";
 
 export default function Home() {
   const { data: session } = useSession()
@@ -74,7 +74,12 @@ export default function Home() {
         <button onClick={() => signOut()}>Sign out</button>
 
         <hr /> */}
+        <div style={{
+          padding: "0 1rem"
+        }}>
+        <Spacer vertical size={80} />
 
+        <h2>Enter your city. Or a different city. Maybe somewhere nice.</h2>
         {weather ?
           <CurrentWeather 
             weather={weather}
@@ -93,7 +98,16 @@ export default function Home() {
           onChange = {event => setLocation(event.target.value)}
           location = {location}/>}
 
+        <Spacer vertical size={80} />
+
+        <h2>Now pick a few genres you like to listen to.</h2>
+        <Spacer vertical size={20} />
         <GenreChips handleClick={handleGenreSelect} selectedGenres={selectedGenres} expand/>
+
+        <Spacer vertical size={80} />
+
+        <Link href="/home">Continue</Link>
+        </div>
       </>
     )
   }

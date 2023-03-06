@@ -207,9 +207,6 @@ export default function Home() {
         <div className={styles.wrapper}>
           {/* <h1>Home</h1> */}
           {/* <button onClick={handleLocalStorageClear}>Clear local storage</button> */}
-
-          <Spacer vertical size={64} />
-
           {/* <WeatherCard
             location={location}
             description={weather.weather[0].description}
@@ -268,10 +265,10 @@ export default function Home() {
             cols={3}
             spacing="lg"
             breakpoints={[
-              { maxWidth: 'lg', cols: 5, spacing: 'lg' },
-              { maxWidth: 'md', cols: 4, spacing: 'md' },
-              { maxWidth: 'sm', cols: 3, spacing: 'sm' },
-              { maxWidth: 'xs', cols: 2, spacing: 'sm' },
+              { maxWidth: 'lg', cols: 4, spacing: 'lg' },
+              { maxWidth: 'md', cols: 3, spacing: 'md' },
+              { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+              { maxWidth: 'xs', cols: 1, spacing: 'sm' },
             ]}
           >
             {recommendations.tracks && recommendations.tracks.map((item) => (
@@ -296,10 +293,10 @@ export default function Home() {
               cols={6}
               spacing="lg"
               breakpoints={[
-                { maxWidth: 'lg', cols: 5, spacing: 'lg' },
-                { maxWidth: 'md', cols: 4, spacing: 'md' },
-                { maxWidth: 'sm', cols: 3, spacing: 'sm' },
-                { maxWidth: 'xs', cols: 2, spacing: 'sm' },
+                { maxWidth: 'lg', cols: 4, spacing: 'lg' },
+                { maxWidth: 'md', cols: 3, spacing: 'md' },
+                { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+                { maxWidth: 'xs', cols: 1, spacing: 'sm' },
               ]}
             >
               {playlists && playlists.map((item) => (

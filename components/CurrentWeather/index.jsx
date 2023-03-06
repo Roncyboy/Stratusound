@@ -4,11 +4,13 @@ import { FaExpandAlt, FaCompressAlt } from 'react-icons/fa';
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { WeatherLotties } from "../Lotties/WeatherLotties";
-import { useMantineTheme, Text } from "@mantine/core";
 import { borderRadius } from "@mui/system";
 import mood from '../../data/mood.json'
+import { Spacer } from "../Spacer";
+import { useMantineTheme } from "@mantine/core";
 
 const StyledInput = styled.input`
+  
 `;
 const StyledSubmit = styled.button`
 
@@ -97,21 +99,21 @@ export function CurrentWeather({
       <div style={{
         marginTop: "0.5em"
       }}>
-        <Text fw={700}>{description}</Text>
-        <Text fw={700}>{`H: ${max} L: ${min}`}</Text>
+        <p>{description}</p>
+        <p>{`H: ${max} L: ${min}`}</p>
       </div>
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
       }}>
-        <Text fw={600} style={{
+        <p style={{
           fontSize: "clamp(1.5rem, 5vw, 3rem)",
           padding: "0",
           margin: "0",
           position: "relative",
           left: "2em",
-            }}>{temp}°</Text>
+            }}>{temp}°</p>
         <div style={{position: "relative", left: "2rem"}}>
         <WeatherLotties weather={`${main}`}/>
             </div>
@@ -120,20 +122,20 @@ export function CurrentWeather({
       {expanded && <div>
         <div style={{display: "flex", justifyContent: "space-evenly", marginBottom: "1rem"}}>
         <div>
-        <Text>Feels like</Text>
-              <Text fw={700} style={{fontSize: "2rem"}}>{feelsLike}</Text>
+        <p>Feels like</p>
+              <p style={{fontSize: "2rem"}}>{feelsLike}</p>
             </div>
             <div>
-              <Text>Humidity</Text>
-        <Text fw={700} style={{fontSize: "2rem"}}>{humidity}</Text>
+              <p>Humidity</p>
+        <p style={{fontSize: "2rem"}}>{humidity}</p>
             </div>
             <div>
-              <Text>Wind</Text>
-              <Text fw={700} style={{fontSize: "2rem"}}>{wind}</Text>
+              <p>Wind</p>
+              <p style={{fontSize: "2rem"}}>{wind}</p>
             </div>
           </div>
         <Flex dir="row" justifyContent="true">
-          <StyledInput type="text" value={location} onChange={onChange} />
+          <StyledInput type="p" value={location} onChange={onChange} />
           <StyledSubmit onClick={onSearch}>Search</StyledSubmit>
         </Flex>
       </div>}
@@ -143,14 +145,22 @@ export function CurrentWeather({
 }
 
 export default function EmptyWeather({ onChange, onSearch, location }) {
+  const theme = useMantineTheme();
   return (
-    <Flex as={motion.div} padding="2em">
-      <Flex dir="row" alignSelf="flex-start" align="flex-start">
-        <StyledInput type="text" value={location} onChange={onChange} />
-        <StyledSubmit onClick={onSearch}>Search</StyledSubmit>
-      </Flex>
-      <FaCompressAlt />
-      <p>Please search for a location. Maybe somewhere nice.</p>
-    </Flex>
+    <>
+      <Spacer vertical size={12} />
+        {/* <StyledInput type="p" value={location} onChange={onChange} /> */}
+        <input type="p" value={location} onChange={onChange} placeholder="Search location" style={{
+          width: "90%",
+          padding: "0.5rem 1rem",
+        }}/>
+        {/* <StyledSubmit onClick={onSearch} style={{width: "10%"}}>Search</StyledSubmit> */}
+        <button type="submit" onClick={onSearch} style={{
+          padding: "0.5rem 1rem",
+          width: "10%",
+          cursor: "pointer",
+        }}
+        >Search</button>
+    </>
   );
 }
