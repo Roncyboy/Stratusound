@@ -132,5 +132,18 @@
                      "joy",
                      "warm"
               ]
+       },
+       {
+         "name": "Mist",
+         "icon": "09d",
+         "color": "#fafafa",
+         "moods": [
+           "mysterious",
+           "calm",
+           "loneliness",
+           "uncertain",
+           "introspection",
+           "romantic"
+         ]
        }
 ]}

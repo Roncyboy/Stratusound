@@ -3,12 +3,13 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/router";
 import axios from "axios"
 import styles from '@/styles/Home.module.css'
-import { Loader, SimpleGrid } from "@mantine/core"
+import { SimpleGrid, Loader } from "@mantine/core"
+import {motion, AnimatePresence} from "framer-motion"
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
-import WeatherCard from "@/components/WeatherCard";
+import { CurrentWeather } from "@/components/CurrentWeather";
 
 export default function Home() {
   // Variables
@@ -16,6 +17,7 @@ export default function Home() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(true)
+  const [fakeLoading, setFakeLoading] = useState(true)
   const [location, setLocation] = useState("");
   const [genres, setGenres] = useState({});
   const [selectedGenres, setSelectedGenres] = useState([])
@@ -77,9 +79,8 @@ export default function Home() {
     const getWeatherPlaylists = async () => {
       const res = await fetch(`/api/weather-playlists?weather=${weather.weather[0].main}`)
       const data = await res.json()
-      // console.log(data.playlists.items)
+      console.log(data.playlists.items)
       setPlaylists(data.playlists.items)
-      // console.log(songs)
     }
 
     const getTopTracks = async () => {
@@ -147,6 +148,13 @@ export default function Home() {
 
   }, [weather])
 
+  // Fake loading effect to prevent flickers
+  useEffect(() => {
+    setTimeout(() => {
+      setFakeLoading(false)
+    }, 1500)
+  }, [])
+
   const handleGenreSelect = ({ genre }) => {
     console.log(selectedGenres)
     let updatedGenres = []
@@ -171,25 +179,59 @@ export default function Home() {
     localStorage.clear()
   }
 
+  const searchLocation = async () => {
+    try {
+      const res = await axios.get(url)
+      console.log(res.data)
+      setWeather(res.data)
+      localStorage.setItem('location', res.data.name);
+      console.log(`save ${res.data.name} to localstorage`)
+      // return res.data
+    } catch (err) {
+      console.log(err)
+    }
+    console.log('search location done')
+  }
+
   if (session) {
     if (weather) {
+      if (fakeLoading) {
+        return (
+          <div style={{width: "100%", display: "grid", placeContent: "center", height: "100vh"}}>
+            <Loader />
+          </div>
+        )
+      } else {
       return (
         <div className={styles.wrapper}>
           {/* <h1>Home</h1> */}
           {/* <button onClick={handleLocalStorageClear}>Clear local storage</button> */}
-
-          <Spacer vertical size={64} />
-
-          <WeatherCard
+          {/* <WeatherCard
             location={location}
             description={weather.weather[0].description}
             high={weather.main.temp_max}
             low={weather.main.temp_min}
             main={weather.main.temp.toFixed(0)}
             weather={weather.weather[0].main}
-          />
+          /> */}
 
-          <Spacer vertical size={64} />
+          {weather ?
+            <CurrentWeather
+              name={weather.name}
+              temp={weather.main.temp}
+              description={weather.weather[0].description}
+              main={weather.weather[0].main}
+              onSearch={() => searchLocation()}
+              onChange={event => setLocation(event.target.value)}
+              location={location}
+              max={weather.main.temp_max}
+              min={weather.main.temp_min}
+              weather={weather}
+            />
+            : <EmptyWeather
+              onSearch={() => searchLocation()}
+              onChange={event => setLocation(event.target.value)}
+              location={location} />}
 
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
@@ -203,6 +245,8 @@ export default function Home() {
             />
           </div>}
 
+          <Spacer vertical size={64} />
+
           <h3>Select genres</h3>
           <GenreChips
             handleClick={handleGenreSelect}
@@ -212,35 +256,6 @@ export default function Home() {
           <button onClick={() => { setExpand(!expand) }}>
             {expand ? 'Collapse' : 'Expand'}
           </button>
-
-          <Spacer vertical size={64} />
-
-          <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
-          {loading ? <div><Loader /></div> :
-          <SimpleGrid
-            cols={6}
-            spacing="lg"
-            breakpoints={[
-              { maxWidth: 'lg', cols: 4, spacing: 'lg' },
-              { maxWidth: 'md', cols: 3, spacing: 'md' },
-              { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-              { maxWidth: 'xs', cols: 1, spacing: 'sm' },
-            ]}
-          >
-            {playlists && playlists.map((item) => (
-              <div key={item.id}>
-                <MantineCard
-                  title={item.name}
-                  id={item.id}
-                  img={item.images[0].url}
-                  alt={item.name}
-                  type="playlist"
-                  handleClick={handleClick}
-                />
-              </div>
-            ))}
-          </SimpleGrid>
-          }
 
           <Spacer vertical size={64} />
 
@@ -255,8 +270,13 @@ export default function Home() {
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
             ]}
           >
-            {recommendations.tracks && recommendations.tracks.map((item) => (
-              <div key={item.id}>
+          <AnimatePresence>
+            {recommendations.tracks && recommendations.tracks.map((item, i) => (
+              <motion.div key={item.id}
+                initial={{ opacity: 0, translateX: 50, translateY: -20 }}
+                animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
                 <MantineCard
                   title={item.name}
                   artist={item.artists.map((artist) => artist.name).join(', ')}
@@ -265,12 +285,47 @@ export default function Home() {
                   type="track"
                   handleClick={handleClick}
                 />
-              </div>
+              </motion.div>
             ))}
+            </AnimatePresence>
           </SimpleGrid>
+
+          <Spacer vertical size={64} />
+
+          <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
+          {loading ? <div><Loader /></div> :
+            <SimpleGrid
+              cols={6}
+              spacing="lg"
+              breakpoints={[
+                { maxWidth: 'lg', cols: 4, spacing: 'lg' },
+                { maxWidth: 'md', cols: 3, spacing: 'md' },
+                { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+                { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+              ]}
+            >
+              {playlists && playlists.map((item, i) => (
+                <motion.div key={item.id}
+                  initial={{ opacity: 0, translateX: 50, translateY: -20 }}
+                  animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
+                  <MantineCard
+                    title={item.name}
+                    id={item.id}
+                    img={item.images[0].url}
+                    alt={item.name}
+                    type="playlist"
+                    handleClick={handleClick}
+                  />
+                </motion.div>
+              ))}
+            </SimpleGrid>
+          }
+          <Spacer vertical size={164} />
         </div>
       )
     }
   }
-
+  }
 }

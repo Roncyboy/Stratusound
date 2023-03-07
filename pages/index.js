@@ -2,17 +2,17 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import Carousel from "framer-motion-carousel";
 
 import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import axios from "axios"
 
 import GenreChips from "@/components/GenreChips"
-
-import MantineCard from '../components/MantineCard'
-import MantineNav from "@/components/MantineNav"
 import EmptyWeather from '@/components/CurrentWeather'
 import {CurrentWeather} from '@/components/CurrentWeather'
+import { Spacer } from "@/components/Spacer";
+import Link from "next/link";
 
 export default function Home() {
   const { data: session } = useSession()
@@ -70,34 +70,44 @@ export default function Home() {
   if (session) {
     return (
       <>
-        <p>Signed in {session?.token?.email}</p>
+        {/* <p>Signed in {session?.token?.email}</p>
         <button onClick={() => signOut()}>Sign out</button>
 
-        <hr />
+        <hr /> */}
+        <div style={{
+          padding: "0 1rem"
+        }}>
+        <Spacer vertical size={80} />
 
-        {/* <input
-          value={location}
-          onChange={event => setLocation(event.target.value)}
-          placeholder='Enter location'
-          type='text'
-        />
-        <button onClick={() => searchLocation()}>Search</button> */}
-        {/* <button onClick={() => getMyPlaylists()}>Get playlists</button> */}
-
+        <h2>Enter your city. Or a different city. Maybe somewhere nice.</h2>
         {weather ?
           <CurrentWeather 
-          name = {weather.name} 
-          temp = {weather.main.temp} 
-          description = {weather.weather[0].description}
-          onSearch = {() => searchLocation()} 
-          onChange = {event => setLocation(event.target.value)}
-          location = {location}/>
+            weather={weather}
+            name = {weather.name} 
+            temp = {weather.main.temp} 
+            description = {weather.weather[0].description}
+            main = {weather.weather[0].main}
+            onSearch = {() => searchLocation()} 
+            onChange = {event => setLocation(event.target.value)}
+            location = {location}
+            max={weather.main.temp_max}
+            min={weather.main.temp_min}
+          />
           : <EmptyWeather
           onSearch = {() => searchLocation()} 
           onChange = {event => setLocation(event.target.value)}
           location = {location}/>}
 
+        <Spacer vertical size={80} />
+
+        <h2>Now pick a few genres you like to listen to.</h2>
+        <Spacer vertical size={20} />
         <GenreChips handleClick={handleGenreSelect} selectedGenres={selectedGenres} expand/>
+
+        <Spacer vertical size={80} />
+
+        <Link href="/home">Continue</Link>
+        </div>
       </>
     )
   }
@@ -105,6 +115,24 @@ export default function Home() {
     <>
       Not signed in <br />
       <button onClick={() => signIn()}>Sign in</button>
+      <div style={{ width: 400, height: 600, margin: "0 auto" }}>
+        <Carousel
+          interval={7500}
+          loop={true}
+          autoPlay={true}
+        >
+          {[1, 2, 3, 4].map((item, i) => (
+            <img
+              draggable="false"
+              src={`./carousel/${item}.jpg`}
+              key={i}
+              width="100%"
+              height="100%"
+              alt=""
+            />
+          ))}
+        </Carousel>
+      </div>
     </>
   )
 }
