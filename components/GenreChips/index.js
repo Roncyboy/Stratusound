@@ -141,7 +141,7 @@ export default function GenreChips({ handleClick, selectedGenres, expand }) {
 
   if (expand) {
     return (
-      <ScrollArea style={{ height: 640, transition: "0.25s" }}>
+      <ScrollArea style={{ height: 300, transition: "0.25s" }}>
         <Chip.Group multiple>
           {genres.map((genre, index) => (
             <Chip checked={selectedGenres.includes(genre) ? true : false} genre={genre} variant="filled" key={index} value={genre} onClick={() => {
@@ -153,7 +153,7 @@ export default function GenreChips({ handleClick, selectedGenres, expand }) {
     );
   } else {
     return (
-      <ScrollArea style={{ height: 120, transition: "0.25s" }}>
+      <ScrollArea style={{ height: 50, transition: "0.25s" }}>
         {/* ... content */}
         <Chip.Group multiple>
           {/* {genres.map((genre, index) => (
@@ -166,6 +166,17 @@ export default function GenreChips({ handleClick, selectedGenres, expand }) {
               handleClick({ genre })
             }}>{genre}</Chip>
           ))}
+
+
+        {selectedGenres.length < 3 && genres.map((genre, index) => {
+          if (index < 3) {
+            return (
+              <Chip checked={selectedGenres.includes(genre) ? true : false} genre={genre} variant="filled" key={index} value={genre} onClick={() => {
+                handleClick({ genre })
+              }}>{genre}</Chip>
+            )
+          }
+        })}
 
 
         </Chip.Group>
