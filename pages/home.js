@@ -5,11 +5,13 @@ import axios from "axios"
 import styles from '@/styles/Home.module.css'
 import { SimpleGrid, Loader } from "@mantine/core"
 import {motion, AnimatePresence} from "framer-motion"
+import { FaExpandAlt, FaCompressAlt } from 'react-icons/fa'
 
 import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
 import { CurrentWeather } from "@/components/CurrentWeather";
+
 
 export default function Home() {
   // Variables
@@ -246,16 +248,26 @@ export default function Home() {
           </div>}
 
           <Spacer vertical size={64} />
-
+            <div>
           <h3>Select genres</h3>
           <GenreChips
             handleClick={handleGenreSelect}
             selectedGenres={selectedGenres}
             expand={expand}
           />
-          <button onClick={() => { setExpand(!expand) }}>
-            {expand ? 'Collapse' : 'Expand'}
-          </button>
+          
+          {expand ? ( <FaCompressAlt
+          size={25}
+          className="flexEnd"
+          onClick={() => { setExpand(!expand) }}
+        /> ) : (
+          <FaExpandAlt 
+          size={25} 
+          className="flexEnd" 
+          onClick={() => { setExpand(!expand) }}
+           />
+        )}
+        </div>
 
           <Spacer vertical size={64} />
 
