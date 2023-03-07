@@ -4,6 +4,7 @@ import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core
 import { AppProps } from 'next/app';
 import MantineNav from '@/components/MantineNav';
 import { useState } from 'react';
+import Menu from '@/components/Menu';
 
 export default function App({
   Component,
@@ -15,19 +16,23 @@ export default function App({
   const links = [
     {
       link: "/home",
-      label: "Home"
+      label: "Home",
+      icon: 'homeIcon'
     },
     {
       link: "/window",
-      label: "Window"
+      label: "Window",
+      icon: 'windowIcon'
     },
     {
       link: "/profile",
-      label: "Profile"
+      label: "Profile",
+      icon: 'profileIcon'
     },
     {
       link: "/settings",
-      label: "Settings"
+      label: "Settings",
+      icon: 'settingsIcon'
     }
   ]
 
@@ -140,8 +145,9 @@ export default function App({
               ], 
             }
           }}>
-          <MantineNav links={links} toggleColorScheme={toggleColorScheme}/>
-          <Component {...pageProps} />
+          {/* <MantineNav links={links} toggleColorScheme={toggleColorScheme}/> */}
+          <Menu links={links} />
+          <Component {...pageProps} toggleColorScheme={toggleColorScheme}/>
         </MantineProvider>
       </ColorSchemeProvider>
     </SessionProvider>
