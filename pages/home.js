@@ -112,19 +112,11 @@ export default function Home() {
         var r = Math.floor(Math.random() * 4) + 1;
         if (randomNumber.indexOf(r) === -1) randomNumber.push(r);
       }
-      console.log(randomNumber);
-
-
-      console.log(topArtists)
 
       const artistSeed = await topArtists.items[randomNumber[0]].id
       const secondArtistSeed = await topArtists.items[randomNumber[1]].id
       const artistSeeds = [artistSeed, secondArtistSeed]
-
       const trackSeed = await topTracks.items[0].id
-
-      console.log(artistSeeds)
-      // console.log(trackSeed)
 
       let genreString = ''
 
@@ -183,8 +175,10 @@ export default function Home() {
     if (weather) {
       return (
         <div className={styles.wrapper}>
-          <h1>Home</h1>
-          <button onClick={handleLocalStorageClear}>Clear local storage</button>
+          {/* <h1>Home</h1> */}
+          {/* <button onClick={handleLocalStorageClear}>Clear local storage</button> */}
+
+          <Spacer vertical size={64} />
 
           <WeatherCard
             location={location}
@@ -195,16 +189,17 @@ export default function Home() {
             weather={weather.weather[0].main}
           />
 
+          <Spacer vertical size={64} />
+
           {playerId.length > 0 && <div className={styles.player}>
             <iframe
               allow="encrypted-media"
               src={`https://open.spotify.com/embed/${type}/${playerId}?utm_source=generator&theme=1`}
               width="100%"
-
               // 80 or 152
-              height="152"
+              height="160"
               title="Spotify Player"
-              style={{ border: "none" }}
+              style={{borderRadius: "1rem", border: "none"}}
             />
           </div>}
 
@@ -218,15 +213,15 @@ export default function Home() {
             {expand ? 'Collapse' : 'Expand'}
           </button>
 
-          <Spacer vertical size={100} />
+          <Spacer vertical size={64} />
 
           <h2>Playlists for a {(weather.weather[0].main).toLowerCase()} day</h2>
           {loading ? <div><Loader /></div> :
           <SimpleGrid
-            cols={3}
+            cols={6}
             spacing="lg"
             breakpoints={[
-              { maxWidth: 'lg', cols: 4, spacing: 'md' },
+              { maxWidth: 'lg', cols: 4, spacing: 'lg' },
               { maxWidth: 'md', cols: 3, spacing: 'md' },
               { maxWidth: 'sm', cols: 2, spacing: 'sm' },
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
@@ -247,17 +242,14 @@ export default function Home() {
           </SimpleGrid>
           }
 
-          <br />
-          <br />
-          <br />
-          <br />
+          <Spacer vertical size={64} />
 
           <h2>Songs for a {(weather.weather[0].main).toLowerCase()} day</h2>
           <SimpleGrid
             cols={3}
             spacing="lg"
             breakpoints={[
-              { maxWidth: 'lg', cols: 4, spacing: 'md' },
+              { maxWidth: 'lg', cols: 4, spacing: 'lg' },
               { maxWidth: 'md', cols: 3, spacing: 'md' },
               { maxWidth: 'sm', cols: 2, spacing: 'sm' },
               { maxWidth: 'xs', cols: 1, spacing: 'sm' },
