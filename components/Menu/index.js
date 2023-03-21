@@ -21,6 +21,9 @@ const useStyles = createStyles((theme) => ({
         height: "100vh",
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
         transition: "all 0.2s ease-in-out",
+        '@media (max-width: 768px)': {
+            width: '5em',
+        },
     },
     navLogo: {
         display: "flex",
@@ -47,12 +50,35 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     fontSize: theme.fontSizes.lg,
+    '@media (max-width: 768px)': {
+        display: "none",
+    },
+
+
 
     '&:hover': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[5],
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     }},
 
+    smallLink: {
+        display: "none",
+        '@media (max-width: 768px)': {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "1rem 0.5rem",
+            fontSize: "1.5rem",
+            fontWeight: 500,
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            transition: "all 0.2s ease-in-out",
+            display: "flex",
+            alignItems: "center",
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+            fontSize: theme.fontSizes.lg,
+        },
+    },
     linkActive: {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[5],
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -63,10 +89,10 @@ const useStyles = createStyles((theme) => ({
     }},
     linkIcon: {
         marginRight: "0.5rem",
-        fill: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     },
     linkIconActive: {
-        fill: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[5],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[5],
     },
     
 }));
@@ -95,6 +121,23 @@ export default function Menu({ links }) {
         {link.label}
       </a>
     ));
+
+    const smallItems = links.map((link) => (
+        <a
+            key={link.label}
+            href={link.link}
+            className={cx(classes.smallLink, { [classes.linkActive]: active === link.link })}
+            onClick={(event) => {
+            event.preventDefault();
+            router.push(link.link);
+            setActive(link.link);
+            close();
+            }}
+        >
+            <Image src={`/images/${link.icon}.svg`} width={30} height={30} className={cx(classes.linkIcon, { [classes.linkIconActive]: active === link.link })}/>
+        </a>
+    ));
+
   
     return (
         <div className={classes.navbar}>
@@ -104,23 +147,8 @@ export default function Menu({ links }) {
                 <Logo />
             </div>
     <div className={classes.linkCont}>
-        {/* <div onClick={() => r.push('/home')} className={styles.navLink}>
-            <HomeIcon/>
-            Home
-        </div>
-        <div onClick={() => r.push('/window')} className={styles.navLink}>
-            <LibraryMusicIcon/>
-            Window
-        </div>
-        <div onClick={() => r.push('/Profile')} className={styles.navLink}>
-            <AccountCircleIcon/>
-            Profile
-        </div>
-        <div onClick={() => r.push('/Settings')} className={styles.navLink}>
-            <SettingsIcon/>
-            Settings
-        </div> */}
         {items}
+        {smallItems}
         </div>
         </div>
     );
