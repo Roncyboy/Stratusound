@@ -47,6 +47,12 @@ body {
   margin-left: 15em;
 }
 
+@media (max-width: 768px) {
+  body {
+    margin-left: 4em;
+  }
+}
+
 /* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;

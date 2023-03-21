@@ -24,11 +24,11 @@ export default function App({
       label: "Window",
       icon: 'windowIcon'
     },
-    {
-      link: "/profile",
-      label: "Profile",
-      icon: 'profileIcon'
-    },
+    // {
+    //   link: "/profile",
+    //   label: "Profile",
+    //   icon: 'profileIcon'
+    // },
     {
       link: "/settings",
       label: "Settings",
