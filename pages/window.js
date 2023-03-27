@@ -247,7 +247,7 @@ export default function Window() {
                         </div>
                     </div>
                     <div className="Select">
-                        <h2>Window Sill</h2>
+                        <h2>Window Pal</h2>
                         <div className="SelectOptions">
                             {windowSill.map((window) => (
                                 <button onClick={()=> setSelectedWindowSill(window.id - 1)}>

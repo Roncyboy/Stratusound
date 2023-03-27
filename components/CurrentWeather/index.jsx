@@ -8,6 +8,7 @@ import { borderRadius } from "@mui/system";
 import mood from '../../data/mood.json'
 import { Spacer } from "../Spacer";
 import { useMantineTheme } from "@mantine/core";
+import HomeWindow from "../HomeWindow";
 
 const StyledInput = styled.input`
   
@@ -58,7 +59,7 @@ export function CurrentWeather({
 
 
   return (
-    <Flex as={motion.div} padding="1em" >
+    <Flex as={motion.div} padding="1em" align='flex-start' maxWidth='70%'>
     <div style={{
       width: "100%",
       padding: "1rem",
@@ -140,6 +141,7 @@ export function CurrentWeather({
         </Flex>
       </div>}
       </div>
+      {/* <HomeWindow /> */}
     </Flex>
   );
 }
