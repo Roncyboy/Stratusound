@@ -1,27 +1,27 @@
 {
-    "curtains": [
+    "windowFrame": [
         {
             "id": 1,
-            "name": "curtains",
-            "image": "/images/curtains.svg",
+            "name": "Frame1",
+            "image": "/windowAssets/frame/Frame1.png",
             "selected": false
         },
         {
             "id": 2,
-            "name": "curtains",
-            "image": "/images/curtains.svg",
+            "name": "Frame2",
+            "image": "/windowAssets/frame/Frame2.png",
             "selected": false
         },
         {
             "id": 3,
-            "name": "curtains",
-            "image": "/images/curtains.svg",
+            "name": "Frame3",
+            "image": "/windowAssets/frame/Frame3.png",
             "selected": false
         },
         {
             "id": 4,
-            "name": "curtains",
-            "image": "/images/curtains.svg",
+            "name": "Frame4",
+            "image": "/windowAssets/frame/Frame4.png",
             "selected": false
         }
         
@@ -29,78 +29,78 @@
     "windowSill": [
         {
             "id": 1,
-            "name": "window",
-            "image": "/images/window.svg",
+            "name": "Cat",
+            "image": "/windowAssets/icon/icon_cat.png",
             "selected": false
         },
         {
             "id": 2,
-            "name": "window",
-            "image": "/images/window.svg",
+            "name": "Plant",
+            "image": "/windowAssets/icon/icon_plant.png",
             "selected": false
         },
         {
             "id": 3,
-            "name": "window",
-            "image": "/images/window.svg",
+            "name": "Fish",
+            "image": "/windowAssets/icon/icon_fish.png",
             "selected": false
         },
         {
             "id": 4,
-            "name": "window",
-            "image": "/images/window.svg",
+            "name": "Null",
+            "image": "/windowAssets/icon/icon_null.png",
             "selected": false
         }
     ],
     "backgroundScene" : [
         {
             "id": 1,
-            "name": "background",
-            "image": "/images/background.svg",
+            "name": "Beach",
+            "image": "/windowAssets/scene/bg_beach.png",
             "selected": false
         },
         {
             "id": 2,
-            "name": "background",
-            "image": "/images/background.svg",
+            "name": "City",
+            "image": "/windowAssets/scene/bg_city.png",
             "selected": false
         },
         {
             "id": 3,
-            "name": "background",
-            "image": "/images/background.svg",
+            "name": "Country",
+            "image": "/windowAssets/scene/bg_country.png",
             "selected": false
         },
         {
             "id": 4,
-            "name": "background",
-            "image": "/images/background.svg",
+            "name": "Forest",
+            "image": "/windowAssets/scene/bg_forest.png",
             "selected": false
         }
     ],
     "roomScene": [
         {
             "id": 1,
-            "name": "room",
-            "image": "/images/room.svg",
+            "name": "Brick",
+            "image": "/windowAssets/wall/wall_brick.png",
             "selected": false
         },
         {
             "id": 2,
-            "name": "room",
-            "image": "/images/room.svg",
+            "name": "Concrete",
+            "image": "/windowAssets/wall/wall_concrete.png",
             "selected": false
         },
         {
             "id": 3,
-            "name": "room",
-            "image": "/images/room.svg",
+            "name": "Navy",
+            "image": "/windowAssets/wall/wall_navy.png",
             "selected": false
         },
         {
             "id": 4,
-            "name": "room",
-            "image": "/images/room.svg",
+            "name": "Stripes",
+            "image": "/windowAssets/wall/wall_stripes.png",
             "selected": false
         }
     ]

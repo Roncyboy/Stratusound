@@ -11,6 +11,7 @@ import GenreChips from "@/components/GenreChips";
 import MantineCard from '@/components/MantineCard';
 import { Spacer } from "@/components/Spacer";
 import { CurrentWeather } from "@/components/CurrentWeather";
+import  HomeWindow from "@/components/HomeWindow";
 
 
 export default function Home() {
@@ -246,8 +247,9 @@ export default function Home() {
               style={{borderRadius: "1rem", border: "none"}}
             />
           </div>}
-
+<HomeWindow />
           <Spacer vertical size={64} />
+          
             <div>
           <h3>Select genres</h3>
           <GenreChips
