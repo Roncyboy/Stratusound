@@ -99,7 +99,7 @@
                      "232" 
               ],
               "icon": "09d",             
-              "color": "#7369E8",
+              "color": "#3D7CE2",
               "moods": [
                      "melancholy", 
                      "power",
@@ -136,7 +136,7 @@
        {
          "name": "Mist",
          "icon": "09d",
-         "color": "#fafafa",
+         "color": "#7370E8",
          "moods": [
            "mysterious",
            "calm",

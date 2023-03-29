@@ -9,7 +9,7 @@ import drizzly from '/public/lottie/weather/drizzly.json';
 import { useLottie } from 'lottie-react';
 
 const style = {
-       height: 150,
+       height: 300,
 };
 
 function returnWeather(weather) {
