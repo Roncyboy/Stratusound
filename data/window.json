@@ -3,25 +3,25 @@
         {
             "id": 1,
             "name": "Frame1",
-            "image": "/windowAssets/frame/Frame1.png",
+            "image": "/windowAssets/frame/frame1.png",
             "selected": false
         },
         {
             "id": 2,
             "name": "Frame2",
-            "image": "/windowAssets/frame/Frame2.png",
+            "image": "/windowAssets/frame/frame2.png",
             "selected": false
         },
         {
             "id": 3,
             "name": "Frame3",
-            "image": "/windowAssets/frame/Frame3.png",
+            "image": "/windowAssets/frame/frame3.png",
             "selected": false
         },
         {
             "id": 4,
             "name": "Frame4",
-            "image": "/windowAssets/frame/Frame4.png",
+            "image": "/windowAssets/frame/frame4.png",
             "selected": false
         }
         
