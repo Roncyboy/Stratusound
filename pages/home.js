@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useEffect, useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/router";
@@ -32,6 +33,11 @@ export default function Home() {
   const [playerId, setPlayerId] = useState('')
   const [type, setType] = useState('')
   const [expand, setExpand] = useState(false)
+  
+  const [selectedBackground, setSelectedBackground] = useState([0]);
+  const [selectedRoom, setSelectedRoom] = useState([0]);
+  const [selectedWindowFrame, setSelectedWindowFrame] = useState([0]);
+  const [selectedWindowSill, setSelectedWindowSill] = useState([0]);
 
   const apiKey = 'd81e2880e7fc30576236bb01fd689147'
   let lang = 'en'
@@ -54,7 +60,16 @@ export default function Home() {
   useEffect(() => {
     const location = localStorage.getItem("location");
     const genres = JSON.parse(localStorage.getItem("genres"));
+    const background = JSON.parse(localStorage.getItem("background"));
+    const room = JSON.parse(localStorage.getItem("room"));
+    const windowFrame = JSON.parse(localStorage.getItem("windowFrame"));
+    const windowSill = JSON.parse(localStorage.getItem("windowSill"));
 
+    setSelectedBackground(background);
+    setSelectedRoom(room);
+    setSelectedWindowFrame(windowFrame);
+    setSelectedWindowSill(windowSill);
+    
     setLocation(location);
     setGenres(genres);
     setSelectedGenres(genres);
@@ -200,12 +215,27 @@ export default function Home() {
     if (weather) {
       if (fakeLoading) {
         return (
+          <>
+          <Head>
+            <title>Stratusound</title>
+            <meta name="description" content="Stratusound home page" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="icon" href="/" />
+          </Head>
           <div style={{width: "100%", display: "grid", placeContent: "center", height: "100vh"}}>
             <Loader />
           </div>
+          </>
         )
       } else {
       return (
+        <>
+        <Head>
+          <title>Stratusound</title>
+          <meta name="description" content="Stratusound home page" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/" />
+        </Head>
         <div className={styles.wrapper}>
           {/* <h1>Home</h1> */}
           {/* <button onClick={handleLocalStorageClear}>Clear local storage</button> */}
@@ -247,18 +277,17 @@ export default function Home() {
               style={{borderRadius: "1rem", border: "none"}}
             />
           </div>}
-<HomeWindow />
+          <HomeWindow 
+            selectedBackground={selectedBackground} 
+            selectedRoom={selectedRoom} 
+            selectedWindowFrame={selectedWindowFrame} 
+            selectedWindowSill={selectedWindowSill} 
+          />
           <Spacer vertical size={64} />
           
-            <div>
-          <h3>Select genres</h3>
-          <GenreChips
-            handleClick={handleGenreSelect}
-            selectedGenres={selectedGenres}
-            expand={expand}
-          />
-          
-          {expand ? ( <FaCompressAlt
+          <div className="genres">
+          <h3 className="genresTitle">Select genres
+            {expand ? ( <FaCompressAlt
           size={25}
           className="flexEnd"
           onClick={() => { setExpand(!expand) }}
@@ -269,6 +298,12 @@ export default function Home() {
           onClick={() => { setExpand(!expand) }}
            />
         )}
+        </h3>
+          <GenreChips
+            handleClick={handleGenreSelect}
+            selectedGenres={selectedGenres}
+            expand={expand}
+          />
         </div>
 
           <Spacer vertical size={64} />
@@ -338,6 +373,7 @@ export default function Home() {
           }
           <Spacer vertical size={164} />
         </div>
+        </>
       )
     }
   }

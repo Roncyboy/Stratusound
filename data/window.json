@@ -103,5 +103,32 @@
             "image": "/windowAssets/wall/wall_stripes.png",
             "selected": false
         }
+    ],
+    "weatherBg": [
+        {
+            "name": "Cloudy",
+            "image": "/windowAssets/bgWeather/cloudy.png",
+            "selected": false
+        },
+        {
+            "name": "Rain",
+            "image": "/windowAssets/bgWeather/drizzle-rain.png",
+            "selected": false
+        },
+        {
+            "name": "Sunny",
+            "image": "/windowAssets/bgWeather/clear.png",
+            "selected": false
+        },
+        {
+            "name": "Snow",
+            "image": "/windowAssets/bgWeather/snow-atmosphere.png",
+            "selected": false
+        },
+        {
+            "name": "Stormy",
+            "image": "/windowAssets/bgWeather/storm.png",
+            "selected": false
+        }
     ]
 }

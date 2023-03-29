@@ -1,9 +1,12 @@
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import window from '../data/window';
 import { Drawer, Button, Group } from '@mantine/core';
 import { PalLotties, WindowWeather } from '@/components/Lotties/WindowLotties';
 import { createStyles } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
 
 
 
@@ -83,7 +86,7 @@ const useStyles = createStyles((theme) => ({
         alignItems: "center",
         height: "50%",
         width: "50%",
-        zIndex: "5",
+        zIndex: "4",
     },
 
     weatherBg : {
@@ -92,7 +95,7 @@ const useStyles = createStyles((theme) => ({
         width: "100%",
         bottom: "0",
         left: "0",
-        zIndex: "4",
+        zIndex: "2",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
     },
@@ -112,6 +115,7 @@ export default function Window() {
     const roomScene = window.roomScene;
     const windowFrame = window.windowFrame;
     const windowSill = window.windowSill;
+    const weatherBg = window.weatherBg;
     const { classes, cx } = useStyles();
 
     useEffect (() => {
@@ -133,9 +137,9 @@ export default function Window() {
         if (windowSill) {
             setSelectedWindowSill(JSON.parse(windowSill));
         }
-        if (weather) {
-            setSelectedWeather(JSON.parse(weather));
-        }
+        // if (weather) {
+        //     setSelectedWeather(JSON.parse(weather));
+        // }
 
     }, []);
 
@@ -151,6 +155,13 @@ export default function Window() {
     const [opened, setOpened] = useState(true);
 
     return (
+    <>
+        <Head>
+          <title>Window</title>
+          <meta name="description" content="Stratusound window" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/" />
+        </Head>
         <div className={classes.window}>
             <div className={classes.windowContainer}>
                 <div className={classes.windowContainerLeftRoom}
@@ -174,36 +185,21 @@ export default function Window() {
                 >
                 </div>
                 <div className={classes.weatherOverlay}>
-                    <WindowWeather weather="" />
-                    
+                    <WindowWeather weather={selectedWeather} />
                 </div>
-                {/* <div className={classes.weatherBg} 
+                <div className={classes.weatherBg} 
                         style={{
-                            backgroundImage: `url('/windowAssets/bgWeather/drizzle-rain.png')`,
+                            backgroundImage: `url(${weatherBg[selectedWeather].image})`,
                         }}>
-                        </div> */}
+                        </div>
                 <div className={classes.windowContainerPal}>
-                    <PalLotties pal="Cat" />
+                    <PalLotties pal={windowSill[selectedWindowSill].name} />
                 </div>
             </div>
             </div>
-                {/* <div className={classes.window__container__left}>
-                    <div className={classes.windowContainerLeftRoom}>
-                        <Image src={roomScene[selectedRoom].image} alt={selectedRoom.name} width={100} height={100} />
-                    </div>
-                    <div className={classes.windowContainerLeftBackground}>
-                        <Image src={backgroundScene[selectedBackground].image} alt={selectedBackground.name} width={250} height={250}/>
-                    </div>
-                    <div className={classes.windowContainerLeftCurtains}>
-                            <Image src={windowFrame[selectedWindowFrame].image} alt={selectedWindowFrame.name} width={300} height={300} />
-                    
-                    </div>
-                    <div className={classes.windowContainerPal}>
-                            <PalLotties pal="Cat" />
-                    </div>
-                </div> */}
                 <div className={classes.drawerButton}>
-                    <Button onClick={() => setOpened(true)}>Open drawer</Button>
+                    {opened ? <Button onClick={() => {setOpened(false), saveChanges()}}>Save</Button> : <Button onClick={() => setOpened(true)}>Customize</Button>}
+
                 </div>
                 <Drawer
                 opened={opened}
@@ -217,7 +213,7 @@ export default function Window() {
                 overlayColor="rgba(0, 0, 0, 0.1)"
                 >
                     <div className="Select">
-                        <h2>Background</h2>
+                        <h2>Scene</h2>
                         <div className="SelectOptions">
                             {backgroundScene.map((background) => (
                                 <button onClick={()=> setSelectedBackground(background.id - 1)}>
@@ -258,5 +254,6 @@ export default function Window() {
                     </div>
                 </Drawer>
             </div>
+        </>
     )
 }

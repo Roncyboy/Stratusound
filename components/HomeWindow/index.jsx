@@ -1,16 +1,18 @@
 import Image from 'next/image';
 import { PalLotties, WindowWeather } from '@/components/Lotties/WindowLotties';
 import { createStyles } from '@mantine/core';
+import window from '@/data/window.json';
 
 const useStyles = createStyles((theme) => ({
     window: {
         position: 'absolute',
         right: "5em",
-        top: "5em",
+        top: "2em",
         display: 'flex',
         width: "20%",
         zIndex: 10,
         height: "20em",
+        maxWidth: "20em",
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
@@ -62,7 +64,26 @@ const useStyles = createStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 3,
+        zIndex: 4,
+        backgroundSize: "contain",
+    },
+    weatherOverlay: {
+        position: 'absolute',
+        width: "100%",
+        height: "100%",
+        display: 'flex',
+        zIndex: 5,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    weatherBg: {
+        position: 'absolute',
+        width: "70%",
+        height: "70%",
+        zIndex: 2,
+        alignItems: 'center',
+        backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
     },
 }));
@@ -73,26 +94,42 @@ const useStyles = createStyles((theme) => ({
 
 export default function HomeWindow ({ selectedBackground, selectedRoom, selectedWindowFrame, selectedWindowSill }) {
     
+    const backgroundScene = window.backgroundScene;
+    const roomScene = window.roomScene;
+    const windowFrame = window.windowFrame;
+    const windowSill = window.windowSill;
+
     const { classes, cx }  = useStyles();
 
     return (
         <div className={classes.window}>
             <div className={classes.windowBackground} 
                 // style={{backgroundImage: `url(${selectedBackground})`}}>
-                style={{backgroundImage: "url('/windowAssets/wall/wall_brick.png')"}}>
+                style={{backgroundImage: `url(${roomScene[selectedRoom].image})`}}>
+                    <div className={classes.weatherBg} 
+                        style={{
+                            backgroundImage: "url('/windowAssets/bgWeather/drizzle-rain.png')",
+                        }}>
+                </div>
                     <div className={classes.windowScene}
-                        style={{backgroundImage: "url('/windowAssets/scene/test1.png')"}}
+                        style={{backgroundImage: `url(${backgroundScene[selectedBackground].image})`}}
                         >
+                            
                             {/* <Image src="/windowAssets/scene/bg_forest.png" alt="Picture of the author" width={300} height={300} className={classes.windowScene} /> */}
                         </div>
                 <div className={classes.windowFrame}
-                    style={{backgroundImage: "url('/windowAssets/frame/frame1.png')"}}>
-                        
+                    style={{backgroundImage: `url(${windowFrame[selectedWindowFrame].image})`}}>
+
+                <div className={classes.weatherOverlay}>
+                    <WindowWeather weather='Rain' />
+                </div>
+                
                     <div className={classes.windowSill}>
                         {/* style={{backgroundImage:url('/images/windowAssets/')}}> */}
                         {/* <WindowWeather weather={selectedRoom.weather} />
                         <PalLotties pal={selectedRoom.pal} /> */}
                     </div>
+                    
                 </div>
             </div>
         </div>
