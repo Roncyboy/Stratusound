@@ -99,6 +99,20 @@ export default function HomeWindow ({ selectedBackground, selectedRoom, selected
     const windowFrame = window.windowFrame;
     const windowSill = window.windowSill;
 
+    if (!selectedBackground) {
+        selectedBackground = 0;
+    }
+    if (!selectedRoom) {
+        selectedRoom = 0;
+    }
+    if (!selectedWindowFrame) {
+        selectedWindowFrame = 0;
+    }
+    if (!selectedWindowSill) {
+        selectedWindowSill = 0;
+    }
+
+
     const { classes, cx }  = useStyles();
 
     return (
