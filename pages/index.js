@@ -13,6 +13,7 @@ import EmptyWeather from '@/components/CurrentWeather'
 import {CurrentWeather} from '@/components/CurrentWeather'
 import { Spacer } from "@/components/Spacer";
 import Link from "next/link";
+import { Button } from '@/components/Buttons/Button';
 
 export default function Home() {
   const { data: session } = useSession()
@@ -105,8 +106,8 @@ export default function Home() {
         <GenreChips handleClick={handleGenreSelect} selectedGenres={selectedGenres} expand/>
 
         <Spacer vertical size={80} />
-
-        <Link href="/home">Continue</Link>
+          
+        <Link href="/home" style = {{margin: '0 2em 0 0' }}><Button label = 'Show me the music'></Button></Link>
         </div>
       </>
     )

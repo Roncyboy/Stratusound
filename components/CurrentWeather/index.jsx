@@ -59,10 +59,10 @@ export function CurrentWeather({
 
 
   return (
-    <Flex as={motion.div} padding="1em" align='flex-start' maxWidth='70%'>
+    <Flex as={motion.div} padding="2rem 2rem 1rem 0rem" align='flex-start' maxWidth='70%'>
     <div style={{
       width: "100%",
-      padding: "1rem",
+      padding: "2rem 2rem 2rem 3rem",
       backgroundImage: `linear-gradient(45deg, #222, ${color})`,
       borderRadius: "2rem",
     }}>
