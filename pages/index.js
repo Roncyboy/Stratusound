@@ -71,6 +71,12 @@ export default function Home() {
   if (session) {
     return (
       <>
+      <Head>
+        <title>Stratusound</title>
+        <meta name="description" content="Stratusound, the weather-based music recommendation app that enhances your Spotify listening experience!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/" />
+      </Head>
         {/* <p>Signed in {session?.token?.email}</p>
         <button onClick={() => signOut()}>Sign out</button>
 
@@ -114,6 +120,12 @@ export default function Home() {
   }
   return (
     <>
+    <Head>
+      <title>Stratusound</title>
+      <meta name="description" content="Stratusound, the weather-based music recommendation app that enhances your Spotify listening experience!" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/" />
+    </Head>
       Not signed in <br />
       <button onClick={() => signIn()}>Sign in</button>
       <div style={{ width: 400, height: 600, margin: "0 auto" }}>

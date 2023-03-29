@@ -1,3 +1,4 @@
+import Head from "next/head";
 import styled from "styled-components";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -30,9 +31,16 @@ export default function Settings() {
        };
 
        return (
+              <>
+              <Head>
+                <title>Settings</title>
+                <meta name="description" content="Stratusound settings" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/" />
+              </Head>
               <Flex align="stretch">
                      <Flex align="flex-start" className="white">
-                            <h2>Hello, userName</h2>
+                            <h2>Hello, </h2>
                             <h1> Settings </h1>
                             <HeadingBar>
                                    <h3> Accessibility </h3>
@@ -76,5 +84,6 @@ export default function Settings() {
                             </Flex>
                      </Flex>
               </Flex>
+              </>
        );
 }
