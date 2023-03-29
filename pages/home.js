@@ -220,7 +220,7 @@ export default function Home() {
             <title>Stratusound</title>
             <meta name="description" content="Stratusound home page" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="icon" href="/" />
+                <link rel="icon" href="/favicon.svg" />
           </Head>
           <div style={{width: "100%", display: "grid", placeContent: "center", height: "100vh"}}>
             <Loader />

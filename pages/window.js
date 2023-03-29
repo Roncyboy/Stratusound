@@ -65,9 +65,13 @@ const useStyles = createStyles((theme) => ({
     windowContainerPal: {
         display: "flex",
         position: "absolute",
-        zIndex: "7",
+        height: "25%",
+        width: "25%",
+        zIndex: "9",
         bottom: "0",
         left: "0",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain",
     },
     windowSizing: {
         display: "flex",
@@ -109,7 +113,7 @@ export default function Window() {
     const [selectedRoom, setSelectedRoom] = useState([0]);
     const [selectedWindowFrame, setSelectedWindowFrame] = useState([0]);
     const [selectedWindowSill, setSelectedWindowSill] = useState([0]);
-    const [selectedWeather, setSelectedWeather] = useState([0]);
+    const [selectedWeather, setSelectedWeather] = useState([3]);
 
     const backgroundScene = window.backgroundScene;
     const roomScene = window.roomScene;
@@ -160,7 +164,7 @@ export default function Window() {
           <title>Window</title>
           <meta name="description" content="Stratusound window" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/" />
+                <link rel="icon" href="/favicon.svg" />
         </Head>
         <div className={classes.window}>
             <div className={classes.windowContainer}>
@@ -192,8 +196,12 @@ export default function Window() {
                             backgroundImage: `url(${weatherBg[selectedWeather].image})`,
                         }}>
                         </div>
-                <div className={classes.windowContainerPal}>
-                    <PalLotties pal={windowSill[selectedWindowSill].name} />
+                <div className={classes.windowContainerPal}
+                    style={{
+                        backgroundImage: `url(${windowSill[selectedWindowSill].image})`,
+                    }}
+                >
+                    {/* <PalLotties pal={windowSill[selectedWindowSill].name} /> */}
                 </div>
             </div>
             </div>

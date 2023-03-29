@@ -18,5 +18,7 @@ test.describe('Settings', () => {
     test('Settings page', async ({ page }) => {
         await page.goto(urlSettings);
         expect(await page.title()).toBe('Settings');
+        const favicon = await page.$('link[rel="icon"]');
+        expect(await favicon.getAttribute('href')).toBe('/favicon.svg');
     });
 });

@@ -19,5 +19,7 @@ test.describe("Window Page", () => {
         expect(await page.title()).toBe("Window");
         const metaDescription = await page.$('meta[name="description"]');
         expect(await metaDescription.getAttribute("content")).toBe("Stratusound window");
+        const favicon = await page.$('link[rel="icon"]');
+        expect(await favicon.getAttribute('href')).toBe('/favicon.svg');
     });
 });
