@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
     window: {
         position: 'absolute',
         right: "5em",
-        top: "2em",
+        top: "3em",
         display: 'flex',
         width: "20%",
         zIndex: 10,
@@ -43,8 +43,8 @@ const useStyles = createStyles((theme) => ({
     },
     windowSill: {
         position: 'absolute',
-        width: "70%",
-        height: "70%",
+        width: "25%",
+        height: "25%",
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -121,13 +121,15 @@ export default function HomeWindow ({ selectedBackground, selectedRoom, selected
                     style={{backgroundImage: `url(${windowFrame[selectedWindowFrame].image})`}}>
 
                 <div className={classes.weatherOverlay}>
-                    <WindowWeather weather='Rain' />
+                    <WindowWeather weather='Sunny' />
                 </div>
                 
-                    <div className={classes.windowSill}>
+                    <div className={classes.windowSill}
+                        style={{backgroundImage: `url(${windowSill[selectedWindowSill].image})`}}
+                    >
                         {/* style={{backgroundImage:url('/images/windowAssets/')}}> */}
-                        {/* <WindowWeather weather={selectedRoom.weather} />
-                        <PalLotties pal={selectedRoom.pal} /> */}
+                        {/* <WindowWeather weather={selectedRoom.weather} /> */}
+                        {/* <PalLotties pal='Cat' /> */}
                     </div>
                     
                 </div>

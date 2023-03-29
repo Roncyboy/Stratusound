@@ -30,25 +30,25 @@
         {
             "id": 1,
             "name": "Cat",
-            "image": "/windowAssets/icon/icon_cat.png",
+            "image": "/windowAssets/pal/img/pal5.png",
             "selected": false
         },
         {
             "id": 2,
             "name": "Plant",
-            "image": "/windowAssets/icon/icon_plant.png",
+            "image": "/windowAssets/pal/img/pal6.png",
             "selected": false
         },
         {
             "id": 3,
             "name": "Fish",
-            "image": "/windowAssets/icon/icon_fish.png",
+            "image": "/windowAssets/pal/img/pal7.png",
             "selected": false
         },
         {
             "id": 4,
             "name": "Null",
-            "image": "/windowAssets/icon/icon_null.png",
+            "image": "/windowAssets/pal/img/blank.png",
             "selected": false
         }
     ],

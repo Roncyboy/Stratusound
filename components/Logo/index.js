@@ -22,7 +22,6 @@ export function Logo(props = defaultProps) {
     return (
        <LogoDiv height={containerHeight} width={containerWidth}>
             <Image src='/temp_logo.png' width={width} height={height} alt='logo'/>
-            <p className='white'>Stratusound</p>
        </LogoDiv>
    )
 }

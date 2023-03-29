@@ -20,5 +20,7 @@ test.describe("Landing page", () => {
         expect(await page.title()).toBe("Stratusound");
         const metaDescription = await page.$('meta[name="description"]');
         expect(await metaDescription.getAttribute("content")).toBe("Stratusound, the weather-based music recommendation app that enhances your Spotify listening experience!");
+        const favicon = await page.$('link[rel="icon"]');
+        expect(await favicon.getAttribute('href')).toBe('/favicon.svg');
     });
 });
